@@ -19,7 +19,11 @@ model Usuario {
   dtCriacao DateTime @default(now()) @map("dt_criacao")
   dtUpdate  DateTime @updatedAt @map("dt_update")
 
-  tweets Tweet[]
+  tweets    Tweet[]
+  // seguindo
+  followers Follow[] @relation("UserFollowing")
+  //seguidores
+  following Follow[] @relation("UserFollowers")
 
   @@map("usuario")
   @@schema("db_growtwitter_schemas")
@@ -42,5 +46,20 @@ model Tweet {
   usuario Usuario @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("tweet")
+  @@schema("db_growtwitter_schemas")
+}
+
+model Follow {
+  followerId  String @map("follower_id") @db.Uuid // seguir
+  followingId String @map("following_id") @db.Uuid // seguindo
+
+  dtCriacao DateTime @default(now()) @map("dt_criacao")
+  dtUpdate  DateTime @updatedAt @map("dt_update")
+
+  followers Usuario @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  following Usuario @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([followerId, followingId])
+  @@map("follow")
   @@schema("db_growtwitter_schemas")
 }
