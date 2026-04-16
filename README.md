@@ -6,12 +6,14 @@ Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em D
 
 ## 🚀 Tecnologias
 
-- Node.js
-- Express
-- TypeScript
-- REST API
-- PostgreSQL
-- HTML, CSS e JavaScript
+● Node.js
+● Typescript
+● Express.js
+● API Rest
+● Programação Orientada a Objetos
+● PostgreSQL
+● PrismaORM
+● HTML, CSS e JavaScript
 
 ---
 
