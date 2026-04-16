@@ -20,10 +20,12 @@ model Usuario {
   dtUpdate  DateTime @updatedAt @map("dt_update")
 
   tweets    Tweet[]
-  // seguindo
-  followers Follow[] @relation("UserFollowing")
-  //seguidores
-  following Follow[] @relation("UserFollowers")
+  // QuemMeSegue
+  followers Follow[] @relation("QuemMeSegue")
+  //QuemEuSigo
+  following Follow[] @relation("QuemEuSigo")
+
+  likes Like[] @relation("UsuariosId")
 
   @@map("usuario")
   @@schema("db_growtwitter_schemas")
@@ -36,7 +38,7 @@ model Tweet {
   dtUpdate  DateTime @updatedAt @map("dt_update")
 
   // vai guarda o id do tweet pai referenciado
-  replyId String? @map("replay_id") @db.Uuid
+  replyId String? @map("reply_id") @db.Uuid
   // um tweet se relacionando com o "Tweet-Pai"
   replyTo Tweet?  @relation("TweetReplies", fields: [replyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   // apontando a relacao
@@ -45,7 +47,24 @@ model Tweet {
   userId  String  @map("user_id") @db.Uuid
   usuario Usuario @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+  likes Like[] @relation("TweetsLiked")
+
   @@map("tweet")
+  @@schema("db_growtwitter_schemas")
+}
+
+model Like {
+  usuarioId String @map("usuario_id") @db.Uuid //quem curtiu
+  tweetId   String @map("tweet_id") @db.Uuid // tweet curtido
+
+  dtCriacao DateTime @default(now()) @map("dt_criacao")
+  dtUpdate  DateTime @updatedAt @map("dt_update")
+
+  userId     Usuario @relation("UsuariosId", fields: [usuarioId], references: [id], onDelete: Cascade, onUpdate: Cascade) // quem curtiu
+  tweetLiked Tweet   @relation("TweetsLiked", fields: [tweetId], references: [id], onDelete: Cascade, onUpdate: Cascade) // tweet curtido
+
+  @@id([usuarioId, tweetId])
+  @@map("like")
   @@schema("db_growtwitter_schemas")
 }
 
@@ -56,8 +75,8 @@ model Follow {
   dtCriacao DateTime @default(now()) @map("dt_criacao")
   dtUpdate  DateTime @updatedAt @map("dt_update")
 
-  followers Usuario @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  following Usuario @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  follower Usuario @relation("QuemEuSigo", fields: [followerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  following Usuario @relation("QuemMeSegue", fields: [followingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([followerId, followingId])
   @@map("follow")
