@@ -1,0 +1,51 @@
+# 🐦 GrowTwitter
+
+Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em Desenvolvimento Web Back-End com Node.js e C#.
+
+---
+
+## 🚀 Tecnologias
+
+- Node.js
+- Express
+- TypeScript
+- REST API
+- PostgreSQL
+- HTML, CSS e JavaScript
+
+---
+
+## 💻 Funcionalidades
+
+- Cadastro de usuário (em desenvolvimento)
+- Login e autenticação (em desenvolvimento)
+- Criar posts (em desenvolvimento)
+- Visualizar feed (timeline) (em desenvolvimento)
+- Sistema de perfil de usuário (em desenvolvimento)
+- Explorar conteúdos (em desenvolvimento)
+- Sistema de notificações (em desenvolvimento)
+- Autenticação com JWT (em desenvolvimento)
+
+---
+
+## 📸 Preview
+
+![Preview do projeto](./public/img/image.png)
+
+---
+
+## ⚙️ Como rodar o projeto
+
+```bash
+# clonar repositório
+git clone https://github.com/MattDeveloper94/growtwitter_growdev.git
+
+# entrar na pasta
+cd growtwitter_growdev
+
+# instalar dependências
+npm install
+
+# rodar servidor
+npm run dev
+```
