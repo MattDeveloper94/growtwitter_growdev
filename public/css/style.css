@@ -1,0 +1,88 @@
+:root {
+    --cor-fundo: #ffffff;
+    --cor-borda: #eff3f4;
+    --cor-texto: #0f1419;
+    --cor-texto-cinza: #536471;
+    --cor-hover: #f7f7f7;
+    --cor-widgets: #f7f9f9;
+    /* Cinza suave para a direita */
+    --twitter-blue: #1d9bf0;
+}
+
+.dark-mode {
+    --cor-fundo: #000000;
+    --cor-borda: #2f3336;
+    --cor-texto: #eff3f4;
+    --cor-texto-cinza: #71767b;
+    --cor-hover: #080808;
+    --cor-widgets: #16181c;
+    /* Cinza escuro para o dark mode */
+}
+
+/* ESTILO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* TEMA DA PÁGINA */
+
+/* --- Header --- */
+header {
+    padding: 15px;
+    border-bottom: 1px solid var(--cor-borda);
+    position: sticky;
+    top: 0;
+    /* de 'white' para a variável de fundo */
+    background: var(--cor-fundo);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+}
+
+header h2 {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+/* white mode */
+body:not(.dark-mode) .logo_growtw {
+    display: block;
+}
+
+/* dark mode */
+body.dark-mode .logo_growtw {
+    display: block;
+}
+
+.btn-tema {
+    background: none;
+    border: none;
+    color: var(--cor-texto);
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+.btn-tema:hover {
+    background-color: var(--cor-hover);
+}
+
+/* white mode */
+body:not(.dark-mode) .logo_growtw {
+    display: block;
+}
+
+/* dark mode */
+body.dark-mode .logo_growtw {
+    display: block;
+}

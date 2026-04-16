@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrowTwitter - Dev Edition</title>
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="../../public/css/home.css">
+    <script src="../../public/javascript/pagetema.js"></script>
+    <script src="../../public/javascript/home.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+
+            <div class="logo">
+                <img src="../../public/img/logo_growtwitter.svg" alt="GrowTwitter Logo" class="logo_growtw">
+            </div>
+            <div class="nav-links">
+                <div class="nav-item"><b>🏠 Home</b></div>
+                <div class="nav-item">🔍 Explore</div>
+                <div class="nav-item">🔔 Notifications</div>
+                <div class="nav-item">👤 Profile</div>
+            </div>
+            <button id="btn-menu" class="btn-postar">Post</button>
+
+            <div class="user-account">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <p class="user-name">Nome do Aluno</p>
+                    <p class="user-handle">@dev_aluno</p>
+                </div>
+                <div class="user-more">...</div>
+            </div>
+        </aside>
+
+        <main class="feed">
+            <header class="timeline-header">
+                <h2>Home</h2>
+                <button id="toggle-theme" class="btn-tema">botao-tema-mode</button>
+            </header>
+
+            <div class="tweet-box">
+                <div class="avatar-placeholder"></div>
+                <div class="input-container">
+                    <textarea id="tweetContent" rows="1" placeholder="O que tá rolando?"></textarea>
+                    <div class="tweet-actions">
+                        <button id="btnPostar" class="btn-postar">Post</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="feedList">
+                <article class="post">
+                    <div class="avatar"></div>
+                    <div class="post-content">
+                        <div class="post-header">
+                            <b>Seu Aluno</b> <span>@dev_student • 1h</span>
+                        </div>
+                        <div class="post-text">
+                            Este é um post de exemplo. Quando eu terminar minha API em Node.js com TypeScript, este
+                            conteúdo virá do banco de dados! 🚀
+                        </div>
+                        <div class="post-footer">
+                            <button id="btn-comentar" class="icon-button">💬</button>
+                            <button id="btn-reportar" class="icon-button">🔄</button>
+                            <button id="btn-curtir" class="icon-button">❤️</button>
+                            <button id="btn-deletar" class="icon-button">🗑️</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </main>
+
+        <aside class="widgets">
+            <div class="search-container">
+                <input type="text" id="searchField" class="search-input" autocomplete="off"
+                    placeholder="Busca GrowTwitter">
+            </div>
+            <div class="trending">
+                <h3 id="title-trending">Tendências do momento:</h3>
+                <div class="trend-item">
+                    <span>Trending in Brazil</span>
+                    <p>#NodeJS</p>
+                </div>
+                <div class="trend-item">
+                    <span>Technology · Trending</span>
+                    <p>#TypeScript</p>
+                </div>
+                <div class="trend-item">
+                    <span>Open Source</span>
+                    <p>#PrismaORM</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+</body>
+
+</html>

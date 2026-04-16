@@ -1,0 +1,110 @@
+/* ----- PAGE INDEX --------  */
+
+#tema-index {
+    position: absolute;
+    right: 0;
+    margin: 10px;
+}
+
+.login-page {
+    height: 100vh;
+    display: flex;
+    justify-content: right;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+}
+
+.login-brand {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-large {
+    width: 300px;
+    height: auto;
+}
+
+.login-form-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-form-section img {
+    width: 650px;
+    height: auto;
+    position: relative;
+    left: -91px;
+    margin-bottom: -50px;
+}
+
+.login-form-section h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    margin-left: 2px;
+    font-weight: 800;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 350px;
+}
+
+#login-form input {
+    padding: 15px;
+    border: 1px solid var(--twitter-blue);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--cor-texto);
+    outline: none;
+    transition: 0.2s;
+}
+
+.box-senha:hover,
+.box-login:hover {
+    background-color: var(--cor-fundo);
+    border: 20px solid var(--twitter-blue);
+    box-shadow: 0 0 0 1px var(--twitter-blue);
+}
+
+.btn-login {
+    background-color: #1d9bf0;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-login:hover {
+    filter: brightness(0.9);
+}
+
+.signup-text {
+    margin-left: 50px;
+    font-size: 15px;
+    margin-top: 15px;
+}
+
+#link_cadastro {
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+}
+
+#link_cadastro:hover {
+    font-size: 18px;
+    position: absolute;
+    transform: scale(1.0) translateY(-5px);
+}
