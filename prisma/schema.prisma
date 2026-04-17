@@ -8,12 +8,12 @@ datasource db {
 }
 
 model Usuario {
-  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nome         String    @db.VarChar(120)
-  email        String    @unique @db.VarChar(60)
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nome         String   @db.VarChar(120)
+  email        String   @unique @db.VarChar(60)
   senha        String
-  dtNascimento DateTime? @map("dt_nascimento") @db.Date
-  fotoPerfil   String?   @map("foto_perfil")
+  dtNascimento DateTime @map("dt_nascimento") @db.Date
+  fotoPerfil   String?  @map("foto_perfil")
 
   dtCriacao DateTime @default(now()) @map("dt_criacao")
   dtUpdate  DateTime @updatedAt @map("dt_update")
@@ -74,7 +74,7 @@ model Follow {
   dtCriacao DateTime @default(now()) @map("dt_criacao")
   dtUpdate  DateTime @updatedAt @map("dt_update")
 
-  follower Usuario @relation("QuemEuSigo", fields: [followerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  follower  Usuario @relation("QuemEuSigo", fields: [followerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   following Usuario @relation("QuemMeSegue", fields: [followingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([followerId, followingId])
