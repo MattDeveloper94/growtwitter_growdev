@@ -1,6 +1,6 @@
 # 🐦 GrowTwitter
 
-Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em Desenvolvimento Web Back-End com Node.js e C#.
+Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em Desenvolvimento Web Back-End com Node.js e C# (GrowDev).
 
 ---
 
