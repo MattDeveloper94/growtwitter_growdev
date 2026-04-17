@@ -1,4 +1,5 @@
 export interface LoginUsuarioDto {
-    email: string;
+    email?: string;
+    username?: string;
     senha: string;
 }

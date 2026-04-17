@@ -1,6 +1,7 @@
 // -- USUÁRIO
 export interface CreateUsuarioDto {
     nome: string;
+    username: string;
     email: string;
     senha: string;
     dtNascimento: string;
@@ -9,6 +10,7 @@ export interface CreateUsuarioDto {
 
 export interface UpdateUsuarioDto {
     nome?: string;
+    username?: string;
     email?: string;
     senha?: string;
     dtNascimento?: string;

@@ -5,5 +5,5 @@ export interface CreateTweetDto {
 }
 
 export interface UpdateTweetDto {
-    conteudo?: string
+    conteudo?: string;
 }
