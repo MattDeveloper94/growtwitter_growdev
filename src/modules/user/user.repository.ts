@@ -4,9 +4,12 @@ import { CreateUsuarioDto, UpdateUsuarioDto } from "../user/user.dto"
 export class UserRepository {
 
     // criar novo usuario
-    public async createUsuario(dados: CreateUsuarioDto) {
+    public async criarUsuario(dados: CreateUsuarioDto) {
         const usuario = await prisma.usuario.create({
-            data: dados
+            data: {
+                ...dados,
+                dtNascimento: new Date(dados.dtNascimento)
+            } 
         });
         console.log('✅ Usuário criado:', usuario);
         return usuario;
@@ -54,7 +57,7 @@ export class UserRepository {
     }
 
     // Buscar usuario por Username
-    public async obeterPorUsername(username: string) {
+    public async obterPorUsername(username: string) {
         const usuario = await prisma.usuario.findUnique({
             where: { username },
             select: {
