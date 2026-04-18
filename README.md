@@ -32,6 +32,7 @@ Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em D
 
 ## 📸 Preview
 ![Preview do projeto](./public/img/index.png)
+![Preview do projeto](./public/img/cadastro.png)
 ![Preview do projeto](./public/img/home.png)
 
 ---
