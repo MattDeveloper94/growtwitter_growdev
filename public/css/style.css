@@ -2,7 +2,9 @@
     --cor-fundo: #ffffff;
     --cor-borda: #eff3f4;
     --cor-texto: #0f1419;
+    --cor-texto-cinza-claro: #8c959b;
     --cor-texto-cinza: #536471;
+    --cor-texto-cinza-escuro: #4d5a64;
     --cor-hover: #f7f7f7;
     --cor-widgets: #f7f9f9;
     /* Cinza suave para a direita */
@@ -13,7 +15,9 @@
     --cor-fundo: #000000;
     --cor-borda: #2f3336;
     --cor-texto: #eff3f4;
+    --cor-texto-cinza-claro: #aab8c2;
     --cor-texto-cinza: #71767b;
+    --cor-texto-cinza-escuro: #e7e9ea;
     --cor-hover: #080808;
     --cor-widgets: #16181c;
     /* Cinza escuro para o dark mode */
@@ -30,6 +34,29 @@ body {
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#tema-index {
+    position: absolute;
+    right: 0;
+    margin: 10px;
+    top: 0;
+}
+
+.link {
+    margin-top: 15px;
+    color: var(--cor-texto);
+    font-size: 15px;
+}
+
+.link a {
+    margin-left: 5px;
+    color: #1d9bf0;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
 }
 
 /* TEMA DA PÁGINA */

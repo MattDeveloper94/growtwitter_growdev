@@ -1,0 +1,120 @@
+/* ----- PAGE CADASTRO --------  */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* estilizando calendario campo Date */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(50%) grayscale(100%);
+    cursor: pointer;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 460px;
+    border: 1px solid var(--twitter-blue);
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 28px;
+    text-align: center;
+    font-weight: 800;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 14px;
+    color: var(--cor-texto);
+    font-weight: 500;
+}
+
+input {
+    padding: 15px;
+    border: 1px solid var(--twitter-blue);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--cor-texto);
+    outline: none;
+    transition: 0.2s;
+}
+
+#name:hover,
+#email:hover,
+#username:hover,
+#password:hover,
+#birthdate:hover {
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--twitter-blue);
+    box-shadow: 0 0 0 1px var(--twitter-blue);
+}
+
+.birth-text {
+    font-size: 14px;
+    color: var(--cor-texto);
+    line-height: 1.4;
+    margin-top: -4px;
+    font-weight: 300;
+}
+
+#birthdate {
+    color: var(--cor-texto-cinza);
+}
+
+.submit-btn {
+    background-color: #1d9bf0;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    filter: brightness(0.9);
+}
+
+.link {
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .signup-container {
+        padding: 24px 20px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+}

@@ -1,11 +1,5 @@
 /* ----- PAGE INDEX --------  */
 
-#tema-index {
-    position: absolute;
-    right: 0;
-    margin: 10px;
-}
-
 .login-page {
     height: 100vh;
     display: flex;
@@ -71,6 +65,10 @@
     transition: 0.2s;
 }
 
+.link {
+    margin-left: 62px;
+}
+
 .box-senha:hover,
 .box-login:hover {
     background-color: var(--cor-fundo);
@@ -90,21 +88,4 @@
 
 .btn-login:hover {
     filter: brightness(0.9);
-}
-
-.signup-text {
-    margin-left: 50px;
-    font-size: 15px;
-    margin-top: 15px;
-}
-
-#link_cadastro {
-    margin-left: 5px;
-    transition: transform 0.2s ease;
-}
-
-#link_cadastro:hover {
-    font-size: 18px;
-    position: absolute;
-    transform: scale(1.0) translateY(-5px);
 }

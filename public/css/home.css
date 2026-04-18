@@ -2,7 +2,7 @@
 
 .container {
     display: grid;
-    grid-template-columns: 275px 600px 350px;
+    grid-template-columns: 275px 520px 350px;
     justify-content: center;
     margin: 0 auto;
     min-height: 100vh;
@@ -124,6 +124,7 @@
     flex: 1;
 }
 
+
 textarea {
     width: 100%;
     background: transparent;
@@ -133,6 +134,10 @@ textarea {
     resize: none;
     outline: none;
     padding: 10px 0;
+}
+
+#tweetContent::placeholder {
+    color: var(--cor-texto-cinza-claro);
 }
 
 .tweet-actions {
@@ -218,16 +223,9 @@ textarea {
     transition: 0.2s;
 }
 
-/* Efeito azul quando você clica para escrever (foco) */
-.search-input:focus {
-    background-color: var(--cor-fundo);
-    border: 1px solid var(--twitter-blue);
-    box-shadow: 0 0 0 1px var(--twitter-blue);
-}
-
 /* Cor do texto "Search GrowTwitter" antes de você escrever */
 .search-input::placeholder {
-    color: var(--cor-texto-cinza);
+    color: var(--cor-texto-cinza-claro);
 }
 
 .search-input:hover {

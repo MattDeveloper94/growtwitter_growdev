@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criar conta</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cadastro.css" />
+    <script src="../../public/javascript/pagetema.js"></script>
+    <script src="../../public/javascript/cadastro.js"></script>
+</head>
+
+<body>
+    <div class="signup-container">
+        <div class="logo">
+            <img src="../img/logo_growtwitter.svg" alt="Página de Cadastro GrowTwitter">
+        </div>
+        <h1>Crie sua conta</h1>
+
+        <form>
+            <div class="input-group">
+                <label for="name">Nome</label>
+                <input type="text" id="name" placeholder="Digite seu nome" autocomplete="off" required />
+            </div>
+
+            <div class="input-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="Digite seu e-mail" autocomplete="off" required />
+            </div>
+
+            <div class="input-group">
+                <label for="username">Nome de usuário</label>
+                <input type="text" id="username" placeholder="@seuusuario" autocomplete="off" required />
+            </div>
+
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Digite sua senha" autocomplete="off" required />
+            </div>
+
+            <div class="input-group">
+                <label for="birthdate">Data de nascimento</label>
+                <input type="date" id="birthdate" autocomplete="off" required />
+                <p class="birth-text">
+                    Isso não será exibido publicamente. Confirme sua própria data de nascimento.
+                </p>
+            </div>
+
+            <button type="submit" class="submit-btn">Avançar</button>
+        </form>
+
+        <p class="link">
+            Já tem uma conta? <a href="index.html">Entrar</a>
+        </p>
+    </div>
+
+    <div id="tema-index">
+        <button id="toggle-theme" class="btn-tema">botao-tema-mode</button>
+    </div>
+</body>
+
+</html>
