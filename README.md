@@ -19,7 +19,7 @@ Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em D
 
 ## 💻 Funcionalidades
 
-- Cadastro de usuário (em desenvolvimento)
+- Cadastro de usuário ✅ concluído
 - Login e autenticação (em desenvolvimento)
 - Criar posts (em desenvolvimento)
 - Visualizar feed (timeline) (em desenvolvimento)
