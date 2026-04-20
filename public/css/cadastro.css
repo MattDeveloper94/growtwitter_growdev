@@ -108,13 +108,3 @@ input {
 .link {
     text-align: center;
 }
-
-@media (max-width: 480px) {
-    .signup-container {
-        padding: 24px 20px;
-    }
-
-    h1 {
-        font-size: 26px;
-    }
-}
