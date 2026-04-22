@@ -13,6 +13,7 @@ const camposObrigatorios: (keyof CreateUsuarioDto)[] = [
 const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export class UserService {
+    // injeção de dependência | {corpo do construtor}
     constructor(private userRepository: UserRepository) { }
 
     async createUsuario(dados: CreateUsuarioDto) {

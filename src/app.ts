@@ -1,6 +1,7 @@
 import express from "express";
 import { handleError } from "./middlewares/error.handler";
-import router from "./modules/user/user.routes";
+import userRouter from "./modules/user/user.routes";
+import authRouter from "./modules/auth/auth.routes";
 import cors from "cors";
 
 const app = express();
@@ -8,7 +9,8 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-app.use("/api", router);
+app.use("/api", userRouter);
+app.use("/api", authRouter);
 
 //rota
 app.get("/", (req, res) => {
