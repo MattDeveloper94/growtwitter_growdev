@@ -20,17 +20,82 @@ async function carregarTweets() {
                     <div class="post-text">
                         ${tweets.conteudo}
                     </div>
-                    <div class="post-footer">
+                    <div class="post-footer">   
                         <button class="icon-button">💬</button>
                         <button class="icon-button">🔄</button>
                         <button class="icon-button">❤️</button>
-                        <button class="icon-button">🗑️</button>
+                        <button class="icon-button btn-editar" dado-id="${tweets.id}" dado-conteudo="${tweets.conteudo}">✏️</button>
+                        <button class="icon-button btn-deletar" dado-id="${tweets.id}">🗑️</button>
                     </div>
                 </div>
             `;
 
             feedList.appendChild(article);
+
+            const btnEditar = article.querySelector(".btn-editar");
+            const btnDeletar = article.querySelector(".btn-deletar");
+
+            btnEditar.addEventListener("click", async () => {
+                const novoConteudo = prompt("Editar tweet:", tweets.conteudo);
+
+                if (!novoConteudo || !novoConteudo.trim()) {
+                    return;
+                }
+
+                try {
+                    const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            conteudo: novoConteudo
+                        })
+                    });
+
+                    const resultado = await resposta.json();
+
+                    if (!resposta.ok) {
+                        alert(resultado.message || "Erro ao editar tweet");
+                        return;
+                    }
+                    carregarTweets();
+
+                } catch (error) {
+                    console.error(error);
+                    alert("Erro ao conectar com a API");
+                }
+            });
+
+            btnDeletar.addEventListener("click", async () => {
+                try {
+                    const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
+                        method: 'DELETE'
+                    });
+
+                    const resultado = await resposta.json();
+
+                    if (!resposta.ok) {
+                        alert(resultado.message || "Erro ao deletar tweet");
+                        return;
+                    }
+                    carregarTweets();
+
+                } catch (error) {
+                    console.error(error);
+                    alert("Erro ao conectar com a API");
+                }
+            });
         });
+
+        if (dado.tweets.length === 0) {
+            feedList.innerHTML = `
+        <p style="color: #888; text-align: center; margin-top: 20px;">
+            Nenhum tweet ainda... <img src="../../public/img/imagem_logo.svg" style="width: 30px; opacity: 0.6;" />
+        </p>
+            `;
+            return;
+        }
 
     } catch (error) {
         console.error(error);
@@ -74,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                alert("Tweet criado com sucesso!");
                 document.getElementById("tweetContent").value = "";
                 carregarTweets();
 

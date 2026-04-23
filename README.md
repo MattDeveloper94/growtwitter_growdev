@@ -22,8 +22,8 @@ Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em D
 - Cadastro de usuário ✅ concluído
 - Login e autenticação ✅ concluído
 - Criar posts, associado ao usuario logado ✅ concluído
-- Atualizar posts (em desenvolvimento)
-- Deletar posts (em desenvolvimento)
+- Atualizar posts ✅ concluído
+- Deletar posts ✅ concluído
 - Reply posts (em desenvolvimento)
 - Visualizar feed (timeline) (em desenvolvimento)
 - Sistema de perfil de usuário (em desenvolvimento)

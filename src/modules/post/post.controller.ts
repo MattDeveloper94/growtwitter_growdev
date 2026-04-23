@@ -31,4 +31,5 @@ export class PostController {
         const result = await postService.listarTweets();
         return res.json(result);
     }
+
 }

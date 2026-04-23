@@ -6,6 +6,6 @@ export interface CreateTweetDto {
 }
 
 export interface UpdateTweetDto {
-    conteudo: string;
-    userId?: string;
+    id: string
+    conteudo?: string;
 }
