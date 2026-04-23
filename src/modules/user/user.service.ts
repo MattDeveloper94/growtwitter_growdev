@@ -16,8 +16,6 @@ const camposObrigatorios: (keyof CreateUsuarioDto)[] = [
 export class UserService {
     async createUsuario(dados: CreateUsuarioDto) {
 
-        let usuario;
-
         // // checando os campos
         for (const campo of camposObrigatorios) {
             //buscando o valor pela lista
