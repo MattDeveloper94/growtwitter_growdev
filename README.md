@@ -21,11 +21,13 @@ Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em D
 
 - Cadastro de usuário ✅ concluído
 - Login e autenticação ✅ concluído
-- Criar posts (em desenvolvimento)
+- Criar posts, associado ao usuario logado ✅ concluído
+- Atualizar posts (em desenvolvimento)
+- Deletar posts (em desenvolvimento)
+- Reply posts (em desenvolvimento)
 - Visualizar feed (timeline) (em desenvolvimento)
 - Sistema de perfil de usuário (em desenvolvimento)
 - Explorar conteúdos (em desenvolvimento)
-- Sistema de notificações (em desenvolvimento)
 - Autenticação com JWT (em desenvolvimento)
 
 ---
