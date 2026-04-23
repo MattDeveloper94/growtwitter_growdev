@@ -48,4 +48,21 @@ export class PostRepository {
         console.log('✅ Tweet encontrado:', tweet);
         return tweet;
     }
+
+    // listar
+    public async listarTweets() {
+        return await prisma.tweet.findMany({
+            include: {
+                usuario: {
+                    select: {
+                        nome: true,
+                        username: true
+                    }
+                }
+            },
+            orderBy: {
+                dtCriacao: "desc"
+            }
+        });
+    }
 }

@@ -1,6 +1,5 @@
 // capturando click e levando pra page home
 document.addEventListener('DOMContentLoaded', () => {
-
     // checando login e senha
     const form = document.getElementById("login-form");
 
@@ -15,12 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const dados = login.includes("@") ? { email: login, senha } : { username: login, senha };
 
             try {
-                const resposta = await fetch("http://localhost:3000/api/auth", {
+                const resposta = await fetch("http://localhost:3000/api/auths", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json"
                     },
                     body: JSON.stringify(dados),
+
                 });
 
                 const resultado = await resposta.json();
@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
+                localStorage.setItem("usuarioLogado", JSON.stringify(resultado.usuario));
                 window.location.href = "home.html";
 
             } catch (error) {

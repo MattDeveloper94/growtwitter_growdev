@@ -16,7 +16,7 @@ export class PostService {
 
         return {
             ok: true,
-            tweet: tweetCriado
+            tweets: tweetCriado
         }
     }
 
@@ -38,7 +38,7 @@ export class PostService {
 
         return {
             ok: true,
-            tweet: tweetAtualizado
+            tweets: tweetAtualizado
         };
     }
 
@@ -52,7 +52,16 @@ export class PostService {
 
         return {
             ok: true,
-            tweet: tweetDeletado
+            tweets: tweetDeletado
+        };
+    }
+
+    async listarTweets() {
+        const tweets = await postRepository.listarTweets();
+
+        return {
+            ok: true,
+            tweets
         };
     }
 }
