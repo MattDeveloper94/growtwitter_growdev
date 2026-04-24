@@ -46,6 +46,29 @@ body {
     }
 }
 
+.btn-sair {
+    background-color: red;
+    color: var(--cor-texto-cinza-escuro);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-sair:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08));
+    color: transparent;
+}
+
+.btn-sair:hover::after {
+  content: "NÃO SE VÁ! =S";
+  color: white;
+  position: relative;
+  cursor: pointer;
+  left: -12px;
+}
+
 #tema-index {
     position: absolute;
     right: 0;

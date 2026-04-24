@@ -25,10 +25,12 @@ Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em D
 - Atualizar posts ✅ concluído
 - Deletar posts ✅ concluído
 - Reply posts (em desenvolvimento)
-- Visualizar feed (timeline) ✅ concluído
+- Visualizar feed (timeline - com Tweets de quem você segue) ✅ concluído
+- Visualizar Explore (todos Tweets) ✅ concluído
+- Funcionalidade de seguir e deixar de seguir usuários ✅ concluído
 - Sistema de perfil de usuário (em desenvolvimento)
-- Explorar conteúdos (em desenvolvimento)
 - Autenticação com JWT (em desenvolvimento)
+- Logout (em desenvolvimento)
 
 ---
 

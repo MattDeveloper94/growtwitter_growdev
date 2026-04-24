@@ -1,11 +1,7 @@
 async function carregarTweets() {
     try {
         const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-        const resposta = await fetch("http://localhost:3000/api/feed", {
-            headers: {
-                userId: usuarioLogado.id
-            }
-        });
+        const resposta = await fetch("http://localhost:3000/api/explore");
 
         const dado = await resposta.json();
         const feedList = document.getElementById("feedList");
@@ -14,6 +10,7 @@ async function carregarTweets() {
         feedList.innerHTML = "";
 
         dado.tweets.forEach((tweets) => {
+            // id de quem tweetou é igual a quem está logado
             const isOwner = tweets.userId === usuarioLogado.id;
             const article = document.createElement("article");
             article.classList.add("post");
@@ -23,6 +20,15 @@ async function carregarTweets() {
                 <div class="post-content">
                     <div class="post-header">
                         <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> <span>• ${new Date(tweets.dtCriacao).toLocaleString()}</span>
+
+                        ${!isOwner && !tweets.estouSeguindo ?
+                        `<span class="btn-follow" data-id="${tweets.userId}"> 
+                                Seguir 
+                            </span>
+                        ` : ""}  
+
+                        ${!isOwner && tweets.estouSeguindo ? `<span class="btn-following" data-id="${tweets.userId}">Seguindo</span>` : ""} 
+
                     </div>
                     <div class="post-text">
                         ${tweets.conteudo}
@@ -35,13 +41,8 @@ async function carregarTweets() {
                         ${isOwner ? `
                             <button class="icon-button btn-editar" data-id="${tweets.id}" data-conteudo="${tweets.conteudo}">✏️</button>
                             <button class="icon-button btn-deletar" data-id="${tweets.id}">🗑️</button>
-                        ` : ""}
+                        ` : ""}      
 
-                        ${!isOwner ? `
-                            <button class="btn-follow" data-id="${tweets.userId}">
-                                Seguir
-                            </button>
-                        ` : ""}         
                     </div>
                 </div>
             `;
@@ -110,41 +111,73 @@ async function carregarTweets() {
                     }
                 });
             }
-        });
 
-        if (!isOwner) {
-            const btnFollow = article.querySelector(".btn-follow");
+            // se o ID de quem tweetou é diferente do IdLogado e não está seguindo
+            if (!isOwner && !tweets.estouSeguindo) {
+                const btnFollow = article.querySelector(".btn-follow");
 
-            btnFollow.addEventListener("click", async () => {
-                const userIdParaSeguir = btnFollow.dataset.id;
+                btnFollow.addEventListener("click", async () => {
+                    const userIdParaSeguir = btnFollow.dataset.id;
 
-                try {
-                    const resposta = await fetch(
-                        `http://localhost:3000/api/follows/${userIdParaSeguir}`,
-                        {
-                            method: "POST",
-                            headers: {
-                                userId: usuarioLogado.id
+                    try {
+                        const resposta = await fetch(
+                            `http://localhost:3000/api/follows/${userIdParaSeguir}`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    userId: usuarioLogado.id
+                                }
                             }
+                        );
+
+                        const resultado = await resposta.json();
+
+                        if (!resposta.ok) {
+                            alert(resultado.message || "Erro ao seguir");
+                            return;
                         }
-                    );
-
-                    const resultado = await resposta.json();
-
-                    if (!resposta.ok) {
-                        alert(resultado.message || "Erro ao seguir");
-                        return;
+                        carregarTweets();
+                    } catch (error) {
+                        console.error(error);
+                        alert("Erro ao conectar com a API");
                     }
+                });
+            }
 
-                    // 🔥 recarrega o feed
-                    carregarTweets();
+            // se o ID de quem tweetou é diferente do IdLogado e estou seguindo
+            if (!isOwner && tweets.estouSeguindo) {
+                const btnUnfollow = article.querySelector(".btn-following");
 
-                } catch (error) {
-                    console.error(error);
-                    alert("Erro ao conectar com a API");
-                }
-            });
-        }
+                btnUnfollow.addEventListener("click", async () => {
+                    const userIdUnfollow = btnUnfollow.dataset.id;
+
+                    try {
+                        const resposta = await fetch(
+                            `http://localhost:3000/api/follows/${userIdUnfollow}`,
+                            {
+                                method: "DELETE",
+                                headers: {
+                                    userId: usuarioLogado.id
+                                }
+                            }
+                        );
+
+                        const resultado = await resposta.json();
+
+                        if (!resposta.ok) {
+                            alert(resultado.message || "Erro ao deixa de seguir");
+                            return;
+                        }
+                        carregarTweets();
+                        alert("Você deixou de seguir esse usuário.");
+
+                    } catch (error) {
+                        console.error(error);
+                        alert("Erro ao conectar com a API");
+                    }
+                });
+            }
+        });
 
 
         if (dado.tweets.length === 0) {
