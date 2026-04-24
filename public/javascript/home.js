@@ -1,6 +1,7 @@
 async function carregarTweets() {
     try {
         const resposta = await fetch("http://localhost:3000/api/tweets");
+        const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
         const dado = await resposta.json();
         const feedList = document.getElementById("feedList");
 
@@ -8,6 +9,7 @@ async function carregarTweets() {
         feedList.innerHTML = "";
 
         dado.tweets.forEach((tweets) => {
+            const isOwner = tweets.userId === usuarioLogado.id;
             const article = document.createElement("article");
             article.classList.add("post");
 
@@ -24,69 +26,81 @@ async function carregarTweets() {
                         <button class="icon-button">💬</button>
                         <button class="icon-button">🔄</button>
                         <button class="icon-button">❤️</button>
-                        <button class="icon-button btn-editar" dado-id="${tweets.id}" dado-conteudo="${tweets.conteudo}">✏️</button>
-                        <button class="icon-button btn-deletar" dado-id="${tweets.id}">🗑️</button>
+                        
+                        ${isOwner ? `
+                            <button class="icon-button btn-editar" data-id="${tweets.id}" data-conteudo="${tweets.conteudo}">✏️</button>
+                            <button class="icon-button btn-deletar" data-id="${tweets.id}">🗑️</button>
+                        ` : ""}
                     </div>
                 </div>
             `;
 
             feedList.appendChild(article);
 
-            const btnEditar = article.querySelector(".btn-editar");
-            const btnDeletar = article.querySelector(".btn-deletar");
+            if (isOwner) {
+                const btnEditar = article.querySelector(".btn-editar");
+                const btnDeletar = article.querySelector(".btn-deletar");
 
-            btnEditar.addEventListener("click", async () => {
-                const novoConteudo = prompt("Editar tweet:", tweets.conteudo);
+                btnEditar.addEventListener("click", async () => {
+                    const novoConteudo = prompt("Editar tweet:", tweets.conteudo);
 
-                if (!novoConteudo || !novoConteudo.trim()) {
-                    return;
-                }
-
-                try {
-                    const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
-                        method: 'PUT',
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            conteudo: novoConteudo
-                        })
-                    });
-
-                    const resultado = await resposta.json();
-
-                    if (!resposta.ok) {
-                        alert(resultado.message || "Erro ao editar tweet");
+                    if (!novoConteudo || !novoConteudo.trim()) {
                         return;
                     }
-                    carregarTweets();
 
-                } catch (error) {
-                    console.error(error);
-                    alert("Erro ao conectar com a API");
-                }
-            });
+                    try {
+                        const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
+                            method: 'PUT',
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                conteudo: novoConteudo
+                            })
+                        });
 
-            btnDeletar.addEventListener("click", async () => {
-                try {
-                    const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
-                        method: 'DELETE'
-                    });
+                        const resultado = await resposta.json();
 
-                    const resultado = await resposta.json();
+                        if (!resposta.ok) {
+                            alert(resultado.message || "Erro ao editar tweet");
+                            return;
+                        }
+                        carregarTweets();
 
-                    if (!resposta.ok) {
-                        alert(resultado.message || "Erro ao deletar tweet");
-                        return;
+                    } catch (error) {
+                        console.error(error);
+                        alert("Erro ao conectar com a API");
                     }
-                    carregarTweets();
+                });
 
-                } catch (error) {
-                    console.error(error);
-                    alert("Erro ao conectar com a API");
-                }
-            });
+                btnDeletar.addEventListener("click", async () => {
+                    try {
+                        const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                userId: usuarioLogado.id
+                            })
+                        });
+
+                        const resultado = await resposta.json();
+
+                        if (!resposta.ok) {
+                            alert(resultado.message || "Erro ao deletar tweet");
+                            return;
+                        }
+                        carregarTweets();
+
+                    } catch (error) {
+                        console.error(error);
+                        alert("Erro ao conectar com a API");
+                    }
+                });
+            }
         });
+
 
         if (dado.tweets.length === 0) {
             feedList.innerHTML = `

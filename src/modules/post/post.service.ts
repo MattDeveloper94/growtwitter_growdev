@@ -42,11 +42,14 @@ export class PostService {
         };
     }
 
-    async deletarTweet(id: string) {
+    async deletarTweet(id: string, userId: string) {
         const tweet = await postRepository.obterPorId(id);
 
         if (!tweet)
             throw new Error('Tweet não encontrado.')
+
+        if (tweet.userId != userId)
+            throw new Error('Você não tem permissão para deletar esse tweet.')
 
         const tweetDeletado = await postRepository.deletarTweetPorId(id)
 

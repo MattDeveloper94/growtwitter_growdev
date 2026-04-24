@@ -22,8 +22,9 @@ export class PostController {
 
 
     public async deletar(req: Request<{ id: string }>, res: Response) {
+        const { userId } = req.body;
         const { id } = req.params;
-        const result = await postService.deletarTweet(id);
+        const result = await postService.deletarTweet(id, userId);
         return res.json(result);
     }
 
