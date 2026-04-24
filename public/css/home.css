@@ -165,7 +165,52 @@ textarea {
     margin-top: 20px;
 }
 
+.post-header {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    position: relative;
+}
+
+.post-header .btn-follow {
+    position: absolute;
+    right: 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    color: var(--twitter-blue);
+}
+
+.btn-follow:hover {
+    color: white;
+}
+
 /* Posts */
+
+.post-header .btn-following {
+    position: absolute;
+    right: 0;
+    color: var(--twitter-blue);
+    font-weight: 600;
+}
+
+.btn-following:hover {
+    position: absolute;
+    color: transparent;
+}
+
+.btn-following:hover::after {
+    content: "Deixar";
+    color: red;
+    position: absolute;
+    left: 15%;
+    cursor: pointer;
+}
+
+.post-content {
+    width: 100%;
+}
+
 .post {
     padding: 12px 16px;
     border-bottom: 1px solid var(--cor-borda);

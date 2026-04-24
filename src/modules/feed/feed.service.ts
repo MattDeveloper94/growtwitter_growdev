@@ -29,9 +29,17 @@ export class FeedService {
             }
         });
 
+        const tweetsComJaSigo = tweetsFolliwing.map(item => {
+            return {
+                ...item,
+                // estouSeguindo = true/false
+                estouSeguindo: idsSeguindo.includes(item.userId)
+            }
+        });
+
         return {
             ok: true,
-            tweets: tweetsFolliwing
+            tweets: tweetsComJaSigo
         };
     }
 

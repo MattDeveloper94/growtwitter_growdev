@@ -42,7 +42,6 @@ async function carregarTweets() {
                             <button class="icon-button btn-editar" data-id="${tweets.id}" data-conteudo="${tweets.conteudo}">✏️</button>
                             <button class="icon-button btn-deletar" data-id="${tweets.id}">🗑️</button>
                         ` : ""}      
-
                     </div>
                 </div>
             `;
