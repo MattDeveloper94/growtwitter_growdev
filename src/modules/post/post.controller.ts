@@ -27,10 +27,4 @@ export class PostController {
         const result = await postService.deletarTweet(id, userId);
         return res.json(result);
     }
-
-    public async listar(req: Request, res: Response) {
-        const result = await postService.listarTweets();
-        return res.json(result);
-    }
-
 }

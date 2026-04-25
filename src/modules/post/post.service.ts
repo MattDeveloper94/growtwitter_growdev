@@ -58,13 +58,4 @@ export class PostService {
             tweets: tweetDeletado
         };
     }
-
-    async listarTweets() {
-        const tweets = await postRepository.listarTweets();
-
-        return {
-            ok: true,
-            tweets
-        };
-    }
 }

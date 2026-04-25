@@ -40,16 +40,4 @@ router.delete("/tweets/:id", async (req, res) => {
     }
 });
 
-//API → CARREGAR TWEETS
-router.get("/tweets", async (req, res) => {
-    try {
-        await postController.listar(req, res);
-    } catch (error: any) {
-        return res.status(400).send({
-            ok: false,
-            message: error.message
-        });
-    }
-});
-
 export default router
