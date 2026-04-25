@@ -33,9 +33,7 @@ async function carregarTweets() {
                         ${!isOwner && tweets.estouSeguindo ? `<span class="btn-following" data-id="${tweets.userId}">Seguindo</span>` : ""} 
                     
                     </div>
-                    <div class="post-text">
-                        ${tweets.conteudo}
-                    </div>
+                    <div class="post-text">${tweets.conteudo}</div>
                     <div class="post-footer">   
                         <button class="icon-button">💬</button>
                         <button class="icon-button">🔄</button>
@@ -57,10 +55,6 @@ async function carregarTweets() {
 
                 btnEditar.addEventListener("click", async () => {
                     const novoConteudo = prompt("Editar tweet:", tweets.conteudo);
-
-                    if (!novoConteudo || !novoConteudo.trim()) {
-                        return;
-                    }
 
                     try {
                         const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
@@ -206,6 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btnPostar.addEventListener("click", async function () {
 
             const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+            const campoTweet = document.getElementById("tweetContent");
+            const contador = document.getElementById("contador");
 
             if (!usuarioLogado) {
                 alert("Usuário não está logado.");
@@ -229,11 +225,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resultado = await resposta.json();
 
                 if (!resposta.ok) {
-                    alert(resultado.mensagem || "Erro ao criar seu post");
+                    alert(resultado.message || "Erro ao criar seu post");
                     return;
                 }
 
-                document.getElementById("tweetContent").value = "";
+                campoTweet.value = "";
+                campoTweet.style.height = "auto";
+
+                if (contador) {
+                    contador.textContent = "0/280";
+                    contador.style.color = "#667";
+                }
+
                 carregarTweets();
 
             } catch (error) {

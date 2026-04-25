@@ -1,4 +1,3 @@
-// capturando click e levando pra page home → espera carregar o <head>
 document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.getElementById("formCadastro");
@@ -34,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resultado = await resposta.json();
 
                 if (!resposta.ok) {
-                    alert(resultado.mensagem || "Erro ao criar usuário");
+                    alert(resultado.message || "Erro ao criar usuário");
                     return;
                 }
 

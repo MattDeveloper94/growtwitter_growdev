@@ -6,7 +6,13 @@ const postRepository = new PostRepository();
 export class PostService {
     async createTweet(dados: CreateTweetDto) {
 
-        if (!dados.conteudo.trim())
+        dados.conteudo = dados.conteudo
+            .trim()
+            .split("\n")
+            .map(linha => linha.trim())
+            .join("\n");
+
+        if (!dados.conteudo)
             throw new Error(`O Tweet não pode estar vazio.`)
 
         if (dados.conteudo.length > 280)
@@ -27,7 +33,14 @@ export class PostService {
             throw new Error('Tweet não encontrado.')
 
         if (dados.conteudo !== undefined) {
-            if (!dados.conteudo.trim())
+
+            dados.conteudo = dados.conteudo
+                .trim()
+                .split("\n")
+                .map(linha => linha.trim())
+                .join("\n");
+
+            if (!dados.conteudo)
                 throw new Error("O tweet não pode estar vazio.")
 
             if (dados.conteudo.length > 280)

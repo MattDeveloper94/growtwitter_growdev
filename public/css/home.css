@@ -8,7 +8,7 @@
     min-height: 100vh;
 }
 
-/* Sidebar (Esquerda) */
+/* Sidebar */
 .sidebar {
     border-right: 1px solid var(--cor-borda);
     padding: 10px 20px;
@@ -66,7 +66,7 @@
     font-size: 15px;
 }
 
-/* Feed (Centro) */
+/* Feed */
 .feed {
     border-right: 1px solid var(--cor-borda);
     justify-content: space-between;
@@ -143,8 +143,8 @@ textarea {
 .tweet-actions {
     display: flex;
     justify-content: flex-end;
-    padding-top: 10px;
-    border-top: 1px solid var(--cor-borda);
+    align-items: center;
+    gap: 20px;
 }
 
 .btn-postar {
@@ -163,6 +163,19 @@ textarea {
 
 #btn-menu {
     margin-top: 20px;
+}
+
+#contador {
+    font-size: 13px;
+    color: var(--cor-texto-cinza);
+    min-width: 50px;
+    text-align: right;
+}
+
+.post-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 .post-header {

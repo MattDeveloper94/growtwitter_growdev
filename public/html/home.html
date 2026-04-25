@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrowTwitter - Dev Edition</title>
-    <link rel="stylesheet" href="../../public/css/style.css">
-    <link rel="stylesheet" href="../../public/css/home.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/home.css">
     <link rel="icon" href="../img/imagem_logo.svg">
-    <script src="../../public/javascript/main.js"></script>
-    <script src="../../public/javascript/pagetema.js"></script>
-    <script src="../../public/javascript/home.js"></script>
+    <script src="../javascript/main.js"></script>
+    <script src="../javascript/pagetema.js"></script>
+    <script src="../javascript/home.js"></script>
+    <script src="../javascript/tweetsForm.js"></script>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
         <aside class="sidebar">
 
             <div class="logo">
-                <img src="../../public/img/logo_growtwitter.svg" alt="GrowTwitter Logo" class="logo_growtw">
+                <img src="../img/logo_growtwitter.svg" alt="GrowTwitter Logo" class="logo_growtw">
             </div>
             <div class="nav-links">
                 <div class="nav-item"><b>🏠 Home</b></div>
@@ -45,18 +46,21 @@
             <div id="tema-index">
                 <button id="toggle-theme" class="btn-tema">botao-tema-mode</button>
             </div>
-
             <div class="tweet-box">
                 <div class="avatar-placeholder"></div>
                 <div class="input-container">
                     <textarea id="tweetContent" rows="1" placeholder="O que tá rolando?"></textarea>
                     <div class="tweet-actions">
+                        <div>
+                            <p id="contador">0/280</p>
+                        </div>
                         <button type="submit" id="btnPostar" class="btn-postar">Post</button>
                     </div>
                 </div>
             </div>
 
             <div id="feedList">
+
             </div>
         </main>
 

@@ -1,4 +1,3 @@
-// capturando click e levando pra page home
 document.addEventListener('DOMContentLoaded', () => {
     // checando login e senha
     const form = document.getElementById("login-form");

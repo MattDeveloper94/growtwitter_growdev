@@ -48,12 +48,13 @@ body {
 
 .btn-sair {
     background-color: red;
-    color: var(--cor-texto-cinza-escuro);
+    color: white;
     border: none;
     padding: 10px 24px;
     border-radius: 9999px;
     font-weight: bold;
     cursor: pointer;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08));
 }
 
 .btn-sair:hover {
@@ -62,11 +63,11 @@ body {
 }
 
 .btn-sair:hover::after {
-  content: "NÃO SE VÁ! =S";
-  color: white;
-  position: relative;
-  cursor: pointer;
-  left: -12px;
+    content: "NÃO SE VÁ! =S";
+    color: white;
+    position: relative;
+    cursor: pointer;
+    left: -12px;
 }
 
 #tema-index {
@@ -141,4 +142,3 @@ body.dark-mode .logo_growtw {
 body:not(.dark-mode) .logo_growtw {
     display: block;
 }
-

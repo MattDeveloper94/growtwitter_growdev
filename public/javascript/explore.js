@@ -22,7 +22,7 @@ async function carregarTweets() {
                         <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> <span>• ${new Date(tweets.dtCriacao).toLocaleString()}</span>
 
                         ${!isOwner && !tweets.estouSeguindo ?
-                        `<span class="btn-follow" data-id="${tweets.userId}"> 
+                    `<span class="btn-follow" data-id="${tweets.userId}"> 
                                 Seguir 
                             </span>
                         ` : ""}  
@@ -30,9 +30,7 @@ async function carregarTweets() {
                         ${!isOwner && tweets.estouSeguindo ? `<span class="btn-following" data-id="${tweets.userId}">Seguindo</span>` : ""} 
 
                     </div>
-                    <div class="post-text">
-                        ${tweets.conteudo}
-                    </div>
+                    <div class="post-text">${tweets.conteudo}</div>
                     <div class="post-footer">   
                         <button class="icon-button">💬</button>
                         <button class="icon-button">🔄</button>
@@ -181,9 +179,9 @@ async function carregarTweets() {
 
         if (dado.tweets.length === 0) {
             feedList.innerHTML = `
-        <p style="color: #888; text-align: center; margin-top: 20px;">
-            Nenhum tweet ainda... <img src="../../public/img/imagem_logo.svg" style="width: 30px; opacity: 0.6;" />
-        </p>
+                <p style="color: #888; text-align: center; margin-top: 20px;">
+                    Nenhum tweet ainda... <img src="../../public/img/imagem_logo.svg" style="width: 30px; opacity: 0.6;" />
+                </p>
             `;
             return;
         }
@@ -226,10 +224,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resultado = await resposta.json();
 
                 if (!resposta.ok) {
-                    alert(resultado.mensagem || "Erro ao criar seu post");
+                    alert(resultado.message || "Erro ao criar seu post");
                     return;
                 }
-
+                // area do tweet volta a ficar vazia → ""
                 document.getElementById("tweetContent").value = "";
                 carregarTweets();
 
