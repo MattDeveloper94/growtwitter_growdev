@@ -45,16 +45,16 @@ A aplicação utiliza JWT (JSON Web Token) para autenticação e proteção de r
 
 - Cadastro de usuário ✅ concluído
 - Login e autenticação ✅ concluído
-- Criar posts, associado ao usuario logado ✅ concluído
-- Atualizar posts ✅ concluído
-- Deletar posts ✅ concluído
+- Logout ✅ concluído
+- Criar posts [associado e autenticado] ✅ concluído
+- Atualizar posts [associado e autenticado] ✅ concluído
+- Deletar posts [associado e autenticado] ✅ concluído
 - Reply posts (em desenvolvimento)
-- Visualizar feed (timeline - com Tweets de quem você segue) ✅ concluído
+- Visualizar feed (timeline, com Tweets de quem você segue) ✅ concluído
 - Visualizar Explore (todos Tweets) ✅ concluído
-- Funcionalidade de seguir e deixar de seguir usuários ✅ concluído
+- Funcionalidade de seguir e deixar de seguir usuários [associado e autenticado] ✅ concluído
 - Sistema de perfil de usuário (em desenvolvimento)
 - Autenticação com JWT ✅ concluído
-- Logout (em desenvolvimento)
 
 ---
 

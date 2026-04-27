@@ -3,8 +3,8 @@ async function carregarTweets() {
         const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
         const token = localStorage.getItem("token");
 
-        if (!usuarioLogado || !token) {
-            window.location.href = "login.html";
+        if (!token) {
+            window.location.href = "index.html";
             return;
         }
 
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const contador = document.getElementById("contador");
 
             if (!usuarioLogado || !token) {
-                window.location.href = "login.html";
+                window.location.href = "index.html";
                 return;
             }
 

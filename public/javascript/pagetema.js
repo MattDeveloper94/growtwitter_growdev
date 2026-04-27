@@ -13,23 +13,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const temaSalvo = localStorage.getItem('theme');
-    aplicarTema(temaSalvo);
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+    const temaSalvo = usuarioLogado
+        ? localStorage.getItem(`theme_${usuarioLogado.id}`)
+        : "light";
+
+    aplicarTema(temaSalvo || "light");
 
     // atualiza o botao e salva o tema no localstorage
     if (btnTema) {
         btnTema.addEventListener('click', () => {
             // classlist.toggle → verifica qual tema está ativo 'dark' | 'light'
             document.body.classList.toggle('dark-mode');
-            let novoTema = document.body.classList.contains('dark-mode')
-            if (novoTema)
-                novoTema = 'dark';
-            else
-                novoTema = 'light'
 
-            // Salva a escolha ("dark" ou "light")
-            localStorage.setItem('theme', novoTema);
+            const novoTema = document.body.classList.contains('dark-mode')
+                ? 'dark'
+                : 'light';
 
+            const usuarioLogadoAtual = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+             if (usuarioLogadoAtual) {
+                localStorage.setItem(`theme_${usuarioLogadoAtual.id}`, novoTema);
+             }
+             
             // Atualiza o texto do botão
             aplicarTema(novoTema);
         });
@@ -42,6 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnTema.setAttribute('title', 'Mudar para tema escuro');
             }
         });
-        
+
     }
 });

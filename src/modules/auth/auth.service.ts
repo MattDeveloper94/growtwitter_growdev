@@ -47,7 +47,7 @@ export class AuthService {
     const token = jwt.sign(
       { id: usuario.id },
       "segredo_jwt",
-      { expiresIn: "1h" }
+      { expiresIn: "1h" } //  { expiresIn: 3600 } = 1h
     );
 
     // cria um novo objeto com os dados do usuário, removendo a senha

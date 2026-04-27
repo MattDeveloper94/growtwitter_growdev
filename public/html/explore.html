@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="../../public/css/explore.css">
     <link rel="icon" href="../img/imagem_logo.svg">
     <script src="../../public/javascript/main.js"></script>
-    <script src="../../public/javascript/pagetema.js"></script>
     <script src="../../public/javascript/explore.js"></script>
+    <script src="../../public/javascript/pagetema.js"></script>
     <script src="../javascript/tweetsForm.js"></script>
 </head>
 
@@ -22,12 +22,12 @@
                 <img src="../../public/img/logo_growtwitter.svg" alt="GrowTwitter Logo" class="logo_growtw">
             </div>
             <div class="nav-links">
-                <div class="nav-item">🏠 Home</div>
-                <div class="nav-item"><b>🔍 Explore</b></div>
-                <div class="nav-item">🔔 Notifications</div>
-                <div class="nav-item">👤 Profile</div>
+                <div class="nav-item" data-page="home">🏠 Home</div>
+                <div class="nav-item" data-page="explore"><b>🔍 Explore</b></div>
+                <div class="nav-item" data-page="notifications">🔔 Notifications</div>
+                <div class="nav-item" data-page="profile">👤 Profile</div>
             </div>
-            <button id="btn-menu" class="btn-sair">Sair</button>
+            <button id="btn-menu" class="btn-sair" data-page="logout">Sair</button>
 
             <div class="user-account">
                 <div class="avatar"></div>
