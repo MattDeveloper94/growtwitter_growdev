@@ -25,11 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resultado = await resposta.json();
 
                 if (!resposta.ok) {
-                    alert(resultado.message || "Erro ao fazer login.");
+                    alert(resultado.mensagem || resultado.message || "Erro ao fazer login.");
                     return;
                 }
 
                 localStorage.setItem("usuarioLogado", JSON.stringify(resultado.usuario));
+                localStorage.setItem("token", resultado.token);
                 window.location.href = "home.html";
 
             } catch (error) {

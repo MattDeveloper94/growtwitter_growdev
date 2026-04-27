@@ -1,9 +1,16 @@
 async function carregarTweets() {
     try {
         const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+        const token = localStorage.getItem("token");
+
+        if (!usuarioLogado || !token) {
+            window.location.href = "login.html";
+            return;
+        }
+
         const resposta = await fetch("http://localhost:3000/api/feed", {
             headers: {
-                userId: usuarioLogado.id
+                Authorization: `Bearer ${token}`
             }
         });
 
@@ -54,13 +61,19 @@ async function carregarTweets() {
                 const btnDeletar = article.querySelector(".btn-deletar");
 
                 btnEditar.addEventListener("click", async () => {
+
                     const novoConteudo = prompt("Editar tweet:", tweets.conteudo);
+
+                    if (!novoConteudo || !novoConteudo.trim()) {
+                        return;
+                    }
 
                     try {
                         const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
                             method: 'PUT',
                             headers: {
-                                "Content-Type": "application/json"
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`
                             },
                             body: JSON.stringify({
                                 conteudo: novoConteudo
@@ -86,11 +99,9 @@ async function carregarTweets() {
                         const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
                             method: 'DELETE',
                             headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                userId: usuarioLogado.id
-                            })
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`
+                            }
                         });
 
                         const resultado = await resposta.json();
@@ -120,7 +131,7 @@ async function carregarTweets() {
                             {
                                 method: "POST",
                                 headers: {
-                                    userId: usuarioLogado.id
+                                    Authorization: `Bearer ${token}`
                                 }
                             }
                         );
@@ -153,7 +164,7 @@ async function carregarTweets() {
                             {
                                 method: "DELETE",
                                 headers: {
-                                    userId: usuarioLogado.id
+                                    Authorization: `Bearer ${token}`
                                 }
                             }
                         );
@@ -200,11 +211,13 @@ document.addEventListener('DOMContentLoaded', () => {
         btnPostar.addEventListener("click", async function () {
 
             const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+            const token = localStorage.getItem("token");
+
             const campoTweet = document.getElementById("tweetContent");
             const contador = document.getElementById("contador");
 
-            if (!usuarioLogado) {
-                alert("Usuário não está logado.");
+            if (!usuarioLogado || !token) {
+                window.location.href = "login.html";
                 return;
             }
 
@@ -214,11 +227,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resposta = await fetch("http://localhost:3000/api/tweets", {
                     method: "POST",
                     headers: {
-                        "Content-type": "application/json"
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({
-                        conteudo: tweet,
-                        userId: usuarioLogado.id
+                        conteudo: tweet
                     })
                 });
 

@@ -11,7 +11,6 @@ import cors from "cors";
 const app = express();
 
 app.use(cors());
-
 app.use(express.json());
 app.use("/api", userRouter);
 app.use("/api", authRouter);
@@ -32,7 +31,7 @@ app.get("/prisma-erro", async (req, res) => {
     throw new Error("erro vindo do service");
 });
 
-//middleware de erro
+//middleware de erro → só roda quando acontece erro depois das rotas.
 app.use(handleError);
 
 app.listen(3000, () => {

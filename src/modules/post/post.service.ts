@@ -26,11 +26,15 @@ export class PostService {
         }
     }
 
-    async updateTweet(id: string, dados: UpdateTweetDto) {
+    async updateTweet(id: string, userId: string, dados: UpdateTweetDto) {
         const tweet = await postRepository.obterPorId(id);
 
         if (!tweet)
             throw new Error('Tweet não encontrado.')
+
+
+        if (tweet.userId != userId)
+            throw new Error('Você não tem permissão para atualizar esse tweet.');
 
         if (dados.conteudo !== undefined) {
 

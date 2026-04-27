@@ -5,10 +5,10 @@ const followService = new FollowService();
 
 export class FollowController {
 
-    public async seguir(req: Request<{ id: string }>, res: Response) {
+    public async seguir(req: Request, res: Response) {
 
-        const followerId = req.headers.userid as string; // logado
-        const { id } = req.params; // id de quem quero seguir
+        const followerId = (req as any).usuario.id;// logado
+        const id = req.params.id as string; // id de quem quero seguir
 
         if (!id) {
             throw new Error("ID não informado");
@@ -19,10 +19,10 @@ export class FollowController {
         return res.json(jaSegue);
     }
 
-    public async deletar(req: Request<{ id: string }>, res: Response) {
+    public async deletar(req: Request, res: Response) {
 
-        const followerId = req.headers.userid as string; // logado
-        const { id } = req.params; // id de quem quero deixa de seguir
+        const followerId = (req as any).usuario.id; // logado
+        const id = req.params.id as string; // id de quem quero deixa de seguir
 
         if (!id) {
             throw new Error("ID não informado");

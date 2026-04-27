@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { PostController } from "./post.controller";
+import { authMiddleware } from "../../middlewares/auth.middleware";
 
 const router = Router();
 const postController = new PostController();
 
 //API → CRIAR tweet
-router.post("/tweets", async (req, res) => {
+router.post("/tweets", authMiddleware, async (req, res) => {
     try {
         await postController.criar(req, res)
     } catch (error: any) {
@@ -17,7 +18,7 @@ router.post("/tweets", async (req, res) => {
 });
 
 //API → ATUALIZAR tweet
-router.put("/tweets/:id", async (req, res) => {
+router.put("/tweets/:id", authMiddleware, async (req, res) => {
     try {
         await postController.update(req, res)
     } catch (error: any) {
@@ -29,7 +30,7 @@ router.put("/tweets/:id", async (req, res) => {
 });
 
 //API → DELETAR tweet
-router.delete("/tweets/:id", async (req, res) => {
+router.delete("/tweets/:id", authMiddleware, async (req, res) => {
     try {
         await postController.deletar(req, res)
     } catch (error: any) {

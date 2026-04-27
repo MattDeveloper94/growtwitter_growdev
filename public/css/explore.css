@@ -143,8 +143,8 @@ textarea {
 .tweet-actions {
     display: flex;
     justify-content: flex-end;
-    padding-top: 10px;
-    border-top: 1px solid var(--cor-borda);
+    align-items: center;
+    gap: 20px;
 }
 
 .btn-postar {

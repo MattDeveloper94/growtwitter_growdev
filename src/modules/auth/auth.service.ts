@@ -1,5 +1,6 @@
 import { LoginUsuarioDto } from "./auth.dto"
 import { UserRepository } from "../user/user.repository"
+import jwt from "jsonwebtoken";
 
 const userRepository = new UserRepository();
 //validacao email
@@ -42,13 +43,21 @@ export class AuthService {
     if (usuario.senha !== dados.senha)
       throw new Error('Login ou senha inválidos!')
 
+    //CRIANDO TOKEN - JWT
+    const token = jwt.sign(
+      { id: usuario.id },
+      "segredo_jwt",
+      { expiresIn: "1h" }
+    );
+
     // cria um novo objeto com os dados do usuário, removendo a senha
     const { senha, ...usuarioSemSenha } = usuario;
 
     //saída
     return {
       ok: true,
-      usuario: usuarioSemSenha
+      usuario: usuarioSemSenha,
+      token
     }
   }
 }

@@ -1,7 +1,18 @@
 async function carregarTweets() {
     try {
         const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-        const resposta = await fetch("http://localhost:3000/api/explore");
+        const token = localStorage.getItem("token");
+
+        if (!usuarioLogado || !token) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const resposta = await fetch("http://localhost:3000/api/explore", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
         const dado = await resposta.json();
         const feedList = document.getElementById("feedList");
@@ -61,7 +72,8 @@ async function carregarTweets() {
                         const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
                             method: 'PUT',
                             headers: {
-                                "Content-Type": "application/json"
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`
                             },
                             body: JSON.stringify({
                                 conteudo: novoConteudo
@@ -87,11 +99,9 @@ async function carregarTweets() {
                         const resposta = await fetch(`http://localhost:3000/api/tweets/${tweets.id}`, {
                             method: 'DELETE',
                             headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                userId: usuarioLogado.id
-                            })
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`
+                            }
                         });
 
                         const resultado = await resposta.json();
@@ -122,7 +132,7 @@ async function carregarTweets() {
                             {
                                 method: "POST",
                                 headers: {
-                                    userId: usuarioLogado.id
+                                    Authorization: `Bearer ${token}`
                                 }
                             }
                         );
@@ -154,7 +164,7 @@ async function carregarTweets() {
                             {
                                 method: "DELETE",
                                 headers: {
-                                    userId: usuarioLogado.id
+                                    Authorization: `Bearer ${token}`
                                 }
                             }
                         );
@@ -201,9 +211,13 @@ document.addEventListener('DOMContentLoaded', () => {
         btnPostar.addEventListener("click", async function () {
 
             const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+            const token = localStorage.getItem("token");
 
-            if (!usuarioLogado) {
-                alert("Usuário não está logado.");
+            const campoTweet = document.getElementById("tweetContent");
+            const contador = document.getElementById("contador");
+
+            if (!usuarioLogado || !token) {
+                window.location.href = "login.html";
                 return;
             }
 
@@ -213,11 +227,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resposta = await fetch("http://localhost:3000/api/tweets", {
                     method: "POST",
                     headers: {
-                        "Content-type": "application/json"
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({
-                        conteudo: tweet,
-                        userId: usuarioLogado.id
+                        conteudo: tweet
                     })
                 });
 
@@ -227,8 +241,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert(resultado.message || "Erro ao criar seu post");
                     return;
                 }
-                // area do tweet volta a ficar vazia → ""
-                document.getElementById("tweetContent").value = "";
+
+                campoTweet.value = "";
+                campoTweet.style.height = "auto";
+
+                if (contador) {
+                    contador.textContent = "0/280";
+                    contador.style.color = "#667";
+                }
+
                 carregarTweets();
 
             } catch (error) {

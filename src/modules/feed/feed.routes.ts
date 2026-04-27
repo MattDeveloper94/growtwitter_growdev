@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { FeedController } from "./feed.controller";
+import { authMiddleware } from "../../middlewares/auth.middleware";
 
 const router = Router();
 const feedController = new FeedController();
 
-router.get("/feed", async (req, res) => {
+router.get("/feed", authMiddleware, async (req, res) => {
     try {
         await feedController.listar(req, res);
     } catch (error: any) {
@@ -15,7 +16,7 @@ router.get("/feed", async (req, res) => {
     }
 });
 
-router.get("/explore", async (req, res) => {
+router.get("/explore", authMiddleware, async (req, res) => {
     try {
         await feedController.listarExplore(req, res);
     } catch (error: any) {
