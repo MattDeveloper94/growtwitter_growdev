@@ -1,11 +1,11 @@
+function logout() {
+    console.log("Logout automático, token expirado ou inválido!");
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = "index.html";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-
-    function logout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("usuarioLogado");
-        window.location.href = "index.html";
-    }
-
 
     const navItems = document.querySelectorAll(".nav-item");
 

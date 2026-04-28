@@ -8,7 +8,8 @@ export class PostRepository {
         const tweet = await prisma.tweet.create({
             data: {
                 conteudo: dados.conteudo,
-                userId: dados.userId
+                userId: dados.userId,
+                replyId: dados.replyId
             }
         });
         console.log('✅ Tweet criado:', tweet);
@@ -18,7 +19,10 @@ export class PostRepository {
     // atualizar tweet
     public async updateTweet(id: string, dados: UpdateTweetDto) {
         const tweet = await prisma.tweet.update({
-            where: { id }, data: dados
+            where: { 
+                id 
+            }, 
+            data: dados
         });
         console.log('✅ Tweet atualizado:', tweet);
         return tweet;
@@ -27,7 +31,9 @@ export class PostRepository {
     // deletar tweet
     public async deletarTweetPorId(id: string) {
         const tweet = await prisma.tweet.delete({
-            where: { id }
+            where: { 
+                id 
+            }
         });
         console.log('✅ Tweet deletado:', tweet);
         return tweet;

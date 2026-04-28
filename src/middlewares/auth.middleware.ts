@@ -34,8 +34,7 @@ export function authMiddleware(
     try {
         //validando token → verifica se esse token foi criado com o segredo "segredo_jwt" e se ele continua ativo.”
         const payload = jwt.verify(token, "segredo_jwt") as JwtPayload;
-
-        // cria um campo chamado usuario dentro do req, dizendo pra ignorar a tipagem (any), e esse campo recebe o payload do JWT.”
+        // cria um campo chamado usuario dentro do req, dizendo que pode receber qualquer tipo (any), e esse campo recebe o payload do JWT.”
         (req as any).usuario = payload;
 
         next();

@@ -8,10 +8,11 @@ export class PostController {
     public async criar(req: Request<any, any, CreateTweetDto>, res: Response) {
         //id do usuário logado que veio de dentro do token
         const userId = (req as any).usuario.id;
-        const { conteudo } = req.body;
-
+        const { conteudo, replyId } = req.body;
+        
         const result = await postService.createTweet({
             conteudo,
+            replyId,
             userId
         });
         return res.json(result);

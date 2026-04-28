@@ -6,14 +6,15 @@ Aplicação inspirada no Twitter desenvolvida durante o curso de Formação em D
 
 ## 🚀 Tecnologias
 
-● Node.js
-● Typescript
-● Express.js
-● API Rest
-● Programação Orientada a Objetos
-● PostgreSQL
-● PrismaORM
-● HTML, CSS e JavaScript
+- Node.js
+- TypeScript
+- Express
+- API REST
+- Programação Orientada a Objetos (POO)
+- PostgreSQL
+- Prisma ORM
+- HTML, CSS e JavaScript
+- JWT Authentication
 
 ---
 
@@ -35,9 +36,14 @@ A aplicação utiliza JWT (JSON Web Token) para autenticação e proteção de r
 
 - O backend identifica o usuário através do token
 - Validação de permissão para:
-    ● editar tweets
-    ● deletar tweets
-    ● seguir/deixar de seguir usuários
+    ● editar tweets [associado e autenticado] ✅ concluído
+    ● deletar tweets [associado e autenticado] ✅ concluído
+    ● seguir/deixar de seguir usuários [associado e autenticado] ✅ concluído
+    ● reply tweets [associado e autenticado] ✅ concluído
+    ● comentar tweets [associado e autenticado] ✅ concluído
+    ● editar comentários [associado e autenticado] ✅ concluído
+    ● deletar comentários [associado e autenticado] ✅ concluído
+    ● curtidas de usuários [associado e autenticado] ✅ concluído
 
 ---
 
@@ -49,11 +55,17 @@ A aplicação utiliza JWT (JSON Web Token) para autenticação e proteção de r
 - Criar posts [associado e autenticado] ✅ concluído
 - Atualizar posts [associado e autenticado] ✅ concluído
 - Deletar posts [associado e autenticado] ✅ concluído
-- Reply posts (em desenvolvimento)
+- Reply posts ✅ concluído
+- Comentar posts ✅ concluído
+- Curtir posts ✅ concluído
+- Upload de imagens no post (em desenvolvimento)
+- Upload de imagens foto do perfil (em desenvolvimento)
 - Visualizar feed (timeline, com Tweets de quem você segue) ✅ concluído
 - Visualizar Explore (todos Tweets) ✅ concluído
 - Funcionalidade de seguir e deixar de seguir usuários [associado e autenticado] ✅ concluído
 - Sistema de perfil de usuário (em desenvolvimento)
+- Sistema de Teste
+- Docker
 - Autenticação com JWT ✅ concluído
 
 ---
@@ -69,20 +81,30 @@ A aplicação utiliza JWT (JSON Web Token) para autenticação e proteção de r
 ## 📡 Rotas principais
 
     🔐 Autenticação
-        ● POST /api/auth → login
+        POST /api/auths → login
     👤 Usuário
-        ● POST /api/users → cadastro
+        POST /api/users → cadastro
     📝 Tweets
-        ● POST /api/tweets → criar tweet
-        ● PUT /api/tweets/:id → editar tweet
-        ● DELETE /api/tweets/:id → deletar tweet
+        POST /api/tweets → criar tweet
+        PUT /api/tweets/:id → editar tweet
+        DELETE /api/tweets/:id → deletar tweet
+    🔁 Reposts / Replies
+        POST /api/tweets + replyId → repostar tweet
+    💬 Comentários
+        POST /api/comments → criar comentário
+        PUT /api/comments/:id → editar comentário
+        DELETE /api/comments/:id → deletar comentário
+        GET /api/comments/tweet/:id → listar comentários do tweet
+    ❤️ Likes
+        POST /api/likes/:id → curtir tweet
+        DELETE /api/likes/:id → remover curtida
     📰 Feed
-        ● GET /api/feed → timeline (tweets seus + tweets de quem você segue)
+        GET /api/feed → timeline (tweets seus + tweets de quem você segue)
     🌎 Explore
-        ● GET /api/explore → feed público (tweets de todos os usuários)
+        GET /api/explore → feed público (tweets de todos os usuários)
     🤝 Follow
-        ● POST /api/follows/:id → seguir
-        ● DELETE /api/follows/:id → deixar de seguir
+        POST /api/follows/:id → seguir usuário
+        DELETE /api/follows/:id → deixar de seguir
 
 ---
 

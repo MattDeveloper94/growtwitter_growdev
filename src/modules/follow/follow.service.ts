@@ -15,11 +15,6 @@ export class FollowService {
             throw new Error("Você não pode seguir a si mesmo.");
         }
 
-        const jaSegue = await followRepository.jaSigo(followerId, followingId);
-
-        if (jaSegue)
-            throw new Error("Você já segue esse usuário.");
-
         // follow
         const follow = await followRepository.criar(followerId, followingId);
 
@@ -39,12 +34,6 @@ export class FollowService {
         if (followerId === followingId) {
             throw new Error("Você não pode deixar de seguir a si mesmo.");
         }
-
-        // follow
-        const jaSegue = await followRepository.jaSigo(followerId, followingId);
-
-        if (!jaSegue)
-            throw new Error("Você não segue esse usuário.");
 
         // unfollow
         const unfollow = await followRepository.deletar(followerId, followingId);

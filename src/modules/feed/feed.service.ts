@@ -9,12 +9,12 @@ export class FeedService {
     public async timeLine(userIdLogado: string) {
 
         // quem eu sigo
-        const seguindo = await followRepository.listarQuemEuSigo(userIdLogado);
+        const seguindo = await followRepository.listarSeguindo(userIdLogado);
 
         // pegar id
         const idsSeguindo = seguindo.map(item => item.followingId);
 
-        // bucas tweets meus e de quem eu sigo
+        // buscar meus tweets e de quem eu sigo
         const tweetsFolliwing = await prisma.tweet.findMany({
             where: {
                 userId: {
@@ -22,7 +22,28 @@ export class FeedService {
                 }
             },
             include: {
-                usuario: true
+                usuario: true,
+                likes: true,
+
+                replyTo: {
+                    include: {
+                        usuario: true
+                    }
+                },
+
+                replies: {
+                    include: {
+                        usuario: true
+                    }
+                },
+
+                _count: {
+                    select: {
+                        likes: true,
+                        replies: true,
+                        comments: true
+                    }
+                }
             },
             orderBy: {
                 dtCriacao: "desc"
@@ -32,8 +53,21 @@ export class FeedService {
         const tweetsComJaSigo = tweetsFolliwing.map(item => {
             return {
                 ...item,
+                totalLikes: item._count.likes,
+                totalReplies: item._count.replies,
+                totalComments: item._count.comments,
                 // estouSeguindo = true/false
-                estouSeguindo: idsSeguindo.includes(item.userId)
+                estouSeguindo: idsSeguindo.includes(item.userId),
+
+                curtido: item.likes.some(
+                    like => like.usuarioId === userIdLogado
+                ),
+
+                repostado: item.replies.some(
+                    reply =>
+                        reply.userId === userIdLogado &&
+                        reply.conteudo !== null
+                )
             }
         });
 
@@ -45,17 +79,58 @@ export class FeedService {
 
     public async explore(userIdLogado: string) {
         // quem eu sigo
-        const seguindo = await followRepository.listarQuemEuSigo(userIdLogado);
+        const seguindo = await followRepository.listarSeguindo(userIdLogado);
 
         // pegar id
         const idsSeguindo = seguindo.map(item => item.followingId);
 
-        // verificando se ja tenho na minha lista de seguidores o id de quem tem tweet no explore.html
-        const tweetExplore = await postRepository.listarTweets()
+        const tweetExplore = await prisma.tweet.findMany({
+            include: {
+                usuario: true,
+                likes: true,
+
+                replyTo: {
+                    include: {
+                        usuario: true
+                    }
+                },
+
+                replies: {
+                    include: {
+                        usuario: true
+                    }
+                },
+
+                _count: {
+                    select: {
+                        likes: true,
+                        replies: true,
+                        comments: true
+                    }
+                }
+            },
+            orderBy: {
+                dtCriacao: "desc"
+            }
+        });
 
         const tweetsComJaSigo = tweetExplore.map(item => {
+
             return {
                 ...item,
+                totalLikes: item._count.likes,
+                totalReplies: item._count.replies,
+                totalComments: item._count.comments,
+
+                curtido: item.likes.some(
+                    like => like.usuarioId === userIdLogado
+                ),
+
+                repostado: item.replies.some(
+                    reply =>
+                        reply.userId === userIdLogado &&
+                        reply.conteudo !== null
+                ),
                 // estouSeguindo = true/false
                 estouSeguindo: idsSeguindo.includes(item.userId)
             }

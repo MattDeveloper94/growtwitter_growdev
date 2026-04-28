@@ -5,6 +5,8 @@ import authRouter from "./modules/auth/auth.routes";
 import postRouter from "./modules/post/post.routes";
 import followRouter from "./modules/follow/follow.routes";
 import feedRouter from "./modules/feed/feed.routes";
+import likeRouter from "./modules/like/like.routes";
+import commentRouter from "./modules/comments/comment.routes";
 
 import cors from "cors";
 
@@ -17,6 +19,8 @@ app.use("/api", authRouter);
 app.use("/api", postRouter);
 app.use("/api", followRouter);
 app.use("/api", feedRouter);
+app.use("/api", likeRouter);
+app.use("/api", commentRouter);
 
 //rota
 app.get("/", (req, res) => {

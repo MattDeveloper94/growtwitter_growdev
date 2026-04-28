@@ -14,9 +14,8 @@ export class FollowController {
             throw new Error("ID não informado");
         }
 
-        const jaSegue = await followService.follow(followerId, id);
-
-        return res.json(jaSegue);
+        const seguindo = await followService.follow(followerId, id);
+        return res.json(seguindo);
     }
 
     public async deletar(req: Request, res: Response) {
@@ -28,8 +27,7 @@ export class FollowController {
             throw new Error("ID não informado");
         }
 
-        const naoSegue = await followService.Unfollow(followerId, id);
-
-        return res.json(naoSegue);
+        const paraSeguir = await followService.Unfollow(followerId, id);
+        return res.json(paraSeguir);
     }
 }

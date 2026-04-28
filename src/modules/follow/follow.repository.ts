@@ -2,26 +2,14 @@ import { prisma } from "../../database/prisma";
 
 export class FollowRepository {
 
-    // listar tweet meus + quem eu sigo
-    public async listarQuemEuSigo(userIdLogado: string) {
+    // listar tweet meus + quem eu sigo // usando no feed.service
+    public async listarSeguindo(userIdLogado: string) { 
         return await prisma.follow.findMany({
             where: {
                 followerId: userIdLogado,
             },
             select: {
                 followingId: true
-            }
-        });
-    }
-
-    // followerid → usuarioLogadoID | followingId → usuarioQueVouSeguirID
-    public async jaSigo(followerId: string, followingId: string) {
-        return await prisma.follow.findUnique({
-            where: {
-                followerId_followingId: {
-                    followerId,
-                    followingId
-                }
             }
         });
     }
