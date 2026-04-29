@@ -16,3 +16,7 @@ export interface UpdateUsuarioDto {
     dtNascimento?: string;
     fotoPerfil?: string;
 }
+
+export interface UploadFotoPerfilDto {
+    fotoPerfil: string
+}

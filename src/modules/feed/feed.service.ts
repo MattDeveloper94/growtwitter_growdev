@@ -10,10 +10,8 @@ export class FeedService {
 
         // quem eu sigo
         const seguindo = await followRepository.listarSeguindo(userIdLogado);
-
         // pegar id
         const idsSeguindo = seguindo.map(item => item.followingId);
-
         // buscar meus tweets e de quem eu sigo
         const tweetsFolliwing = await prisma.tweet.findMany({
             where: {
@@ -24,6 +22,7 @@ export class FeedService {
             include: {
                 usuario: true,
                 likes: true,
+                comments: true,
 
                 replyTo: {
                     include: {
@@ -67,7 +66,11 @@ export class FeedService {
                     reply =>
                         reply.userId === userIdLogado &&
                         reply.conteudo !== null
-                )
+                ),
+
+                comentado: item.comments.some(
+                    comment => comment.userId === userIdLogado
+                ),
             }
         });
 
@@ -88,6 +91,7 @@ export class FeedService {
             include: {
                 usuario: true,
                 likes: true,
+                comments: true,
 
                 replyTo: {
                     include: {
@@ -131,6 +135,11 @@ export class FeedService {
                         reply.userId === userIdLogado &&
                         reply.conteudo !== null
                 ),
+
+                comentado: item.comments.some(
+                    comment => comment.userId === userIdLogado
+                ),
+
                 // estouSeguindo = true/false
                 estouSeguindo: idsSeguindo.includes(item.userId)
             }

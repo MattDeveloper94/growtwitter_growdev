@@ -25,5 +25,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+    const avatar = document.querySelector(".avatar-logado");
+    const avatarTweetBox = document.querySelector(".avatar-tweet-box");
+
+    if (usuarioLogado?.fotoPerfil) {
+
+        avatar.innerHTML = `
+            <img 
+                src="http://localhost:3000${usuarioLogado.fotoPerfil}"
+                class="avatar-img"
+            >
+        `;
+    } else {
+
+        const inicial = usuarioLogado.nome.charAt(0).toUpperCase();
+
+        avatar.textContent = inicial;
+        avatar.classList.add("avatar-placeholder");
+    }
+
+    if (usuarioLogado?.fotoPerfil) {
+
+        avatarTweetBox.innerHTML = `
+            <img 
+                src="http://localhost:3000${usuarioLogado.fotoPerfil}"
+                class="avatar-img"
+            >
+        `;
+    } else {
+
+        const inicial = usuarioLogado.nome.charAt(0).toUpperCase();
+
+        avatarTweetBox.textContent = inicial;
+        avatarTweetBox.classList.add("avatar-placeholder");
+    }
+
     document.getElementById("btn-menu")?.addEventListener("click", logout);
 });

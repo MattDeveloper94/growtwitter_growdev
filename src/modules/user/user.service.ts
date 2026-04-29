@@ -1,5 +1,5 @@
 import { UserRepository } from "./user.repository";
-import { CreateUsuarioDto } from "./user.dto";
+import { CreateUsuarioDto, UploadFotoPerfilDto } from "./user.dto";
 
 const userRepository = new UserRepository();
 const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,6 +27,12 @@ export class UserService {
             }
         }
 
+        const inicial = dados.nome.charAt(0).toUpperCase();
+
+        if (!dados.fotoPerfil) {
+            dados.fotoPerfil = `https://placehold.co/100x100?text=${inicial}`;
+        }
+
         // validacao e-mail
         if (!emailValido.test(dados.email))
             throw new Error(`E-mail inválido.`)
@@ -40,5 +46,22 @@ export class UserService {
             ok: true,
             usuario: usuarioSemSenha
         }
+    }
+}
+
+export class FotoPerfilService {
+    async uploadFotoPerfil(id: string, dado: UploadFotoPerfilDto) {
+
+        if (!dado.fotoPerfil) {
+            throw new Error("Informe uma foto de perfil.");
+        }
+
+        const fotoPerfil = await userRepository.uploadFotoPerfil(id, dado);
+
+        return {
+            ok: true,
+            fotoPerfil: fotoPerfil
+        }
+
     }
 }

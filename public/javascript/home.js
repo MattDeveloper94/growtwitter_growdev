@@ -42,57 +42,64 @@ async function carregarTweets() {
             article.classList.add("post");
 
             article.innerHTML = `
-                <div class="avatar"></div>
+                <div class="avatar">
+                    ${tweets.usuario.fotoPerfil
+                    ? `<img class="avatar-img" src="http://localhost:3000${tweets.usuario.fotoPerfil}">`
+                    : tweets.usuario.nome.charAt(0).toUpperCase()
+                }
+                </div>
                 <div class="post-content">
-                ${tweets.replyTo ? `
-                    <div class="reply-original">
-                        <b>${tweets.replyTo.usuario.nome} @${tweets.replyTo.usuario.username}</b>
-                        <p>${tweets.replyTo.conteudo}</p>
-                    </div>
+                    ${tweets.replyTo ? `
+                        <div class="reply-original">
+                            <b>${tweets.replyTo.usuario.nome} @${tweets.replyTo.usuario.username}</b>
+                            <p>${tweets.replyTo.conteudo}</p>
+                        </div>
 
-                    <div class="post-header">
-                        <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
-                        <span>
-                            • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
-                        </span>
+                        <div class="post-header">
+                            <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
+                            <span>
+                                • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
+                            </span>
 
-                        ${!isOwner && !tweets.estouSeguindo ?
+                            ${!isOwner && !tweets.estouSeguindo ?
                         `<span class="btn-follow" data-id="${tweets.userId}"> 
-                                Seguir 
-                             </span>
-                         ` : ""}  
+                                    Seguir 
+                                </span>
+                            ` : ""}  
 
-                        ${!isOwner && tweets.estouSeguindo ?
+                            ${!isOwner && tweets.estouSeguindo ?
                         `<span class="btn-following" data-id="${tweets.userId}">
-                                Seguindo
+                                    Seguindo
+                                </span>
+                            ` : ""}
+                        </div>
+                    ` : `
+                        <div class="post-header">
+                            <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
+                            <span>
+                                • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
                             </span>
-                        ` : ""}
-                    </div>
-                ` : `
-                    <div class="post-header">
-                        <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
-                        <span>
-                            • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
-                        </span>
 
-                        ${!isOwner && !tweets.estouSeguindo ?
+                            ${!isOwner && !tweets.estouSeguindo ?
                     `<span class="btn-follow" data-id="${tweets.userId}"> 
-                                Seguir 
-                            </span>
-                        ` : ""}  
+                                    Seguir 
+                                </span>
+                            ` : ""}  
 
-                        ${!isOwner && tweets.estouSeguindo ?
+                            ${!isOwner && tweets.estouSeguindo ?
                     `<span class="btn-following" data-id="${tweets.userId}">
-                                Seguindo
-                            </span>
-                        ` : ""}
-                    </div>
-                `}
+                                    Seguindo
+                                </span>
+                            ` : ""}
+                        </div>
+                    `}
+
                     <div class="post-text">${tweets.conteudo}</div>
+
                     <div class="post-footer">   
 
                         <div class="action-item">
-                            <button class="icon-button comment-btn ${tweets.totalComments > 0 ? "commented" : ""}" 
+                            <button class="icon-button comment-btn ${tweets.comentado ? "commented" : ""}" 
                                 title="comentar" 
                                 data-id="${tweets.id}"
                             >
@@ -125,7 +132,7 @@ async function carregarTweets() {
                                     />
                                 </svg>
                             </>
-                            <span class="action-count">${tweets.totalReplies || 0}</span>
+                            <span class="action-count reply-count">${tweets.totalReplies || 0}</span>
                         </div>
                         
                         <div class="action-item">
@@ -178,11 +185,13 @@ async function carregarTweets() {
 
                         ` : ""} 
                     </div>
+
                     <div class="comments-container" style="display: none;"></div>
                     <div class="comment-form" style="display: none;">
                         <textarea class="comment-input" placeholder="Escreva um comentário..."></textarea>
                         <button class="btn-send-comment">Comentar</button>
                     </div>
+
                 </div>
             `;
 
@@ -224,7 +233,7 @@ async function carregarTweets() {
                             alert(resultado.message || "Erro ao editar tweet");
                             return;
                         }
-                        carregarTweets();
+                        article.querySelector(".post-text").textContent = novoConteudo;
 
                     } catch (error) {
                         console.error(error);
@@ -253,7 +262,8 @@ async function carregarTweets() {
                             alert(resultado.message || "Erro ao deletar tweet");
                             return;
                         }
-                        carregarTweets();
+
+                        article.remove();
 
                     } catch (error) {
                         console.error(error);
@@ -290,7 +300,8 @@ async function carregarTweets() {
                             alert(resultado.message || "Erro ao seguir");
                             return;
                         }
-                        carregarTweets();
+
+                        carregarTweets()
 
                     } catch (error) {
                         console.error(error);
@@ -328,8 +339,8 @@ async function carregarTweets() {
                             alert(resultado.message || "Erro ao deixa de seguir");
                             return;
                         }
-                        carregarTweets();
-                        alert("Você deixou de seguir esse usuário.");
+
+                        carregarTweets()
 
                     } catch (error) {
                         console.error(error);
@@ -346,6 +357,12 @@ async function carregarTweets() {
                 const conteudoOriginal = btnReply.dataset.conteudo;
                 const nome = btnReply.dataset.nome;
                 const username = btnReply.dataset.username;
+
+                //verificando se ja foi repostado...
+                if (btnReply.classList.contains("reposted")) {
+                    alert("Você já repostou esse tweet.");
+                    return;
+                }
 
                 const resposta = prompt(
                     `${nome} @${username}\n\n${conteudoOriginal}\n\nResponder:`
@@ -378,7 +395,10 @@ async function carregarTweets() {
                     return;
                 }
 
-                carregarTweets();
+                btnReply.classList.add("reposted");
+
+                const count = article.querySelector(".reply-count");
+                count.textContent = Number(count.textContent) + 1;
             });
 
             const btnComment = article.querySelector(".comment-btn");
@@ -407,7 +427,7 @@ async function carregarTweets() {
                     const isCommentOwner = comment.userId === usuarioLogado.id;
 
                     commentsContainer.innerHTML += `
-                    <div class="comment-item" data-id="${comment.id}">
+                    <div class="comment-item" data-id="${comment.id}" data-owner="${isCommentOwner}">
                         <b>
                             ${comment.usuario.nome} @${comment.usuario.username}
                             <span>
@@ -486,10 +506,12 @@ async function carregarTweets() {
                             }
                         });
 
+                        commentCount.textContent = Math.max(0, Number(commentCount.textContent) - 1);
                         await carregarComentarios(tweetId);
 
-                        commentCount.textContent = Math.max(0, Number(commentCount.textContent) - 1);
-                        if (Number(commentCount.textContent) <= 0) {
+                        const aindaTemComentarioMeu = commentsContainer.querySelector(".comment-item[data-owner='true']");
+
+                        if (!aindaTemComentarioMeu) {
                             btnComment.classList.remove("commented");
                         }
                     });
@@ -500,13 +522,10 @@ async function carregarTweets() {
                 const tweetId = btnComment.dataset.id;
 
                 const aberto = commentForm.style.display === "block";
+                await carregarComentarios(tweetId);
 
                 commentForm.style.display = aberto ? "none" : "block";
                 commentsContainer.style.display = aberto ? "none" : "block";
-
-                if (!aberto) {
-                    await carregarComentarios(tweetId);
-                }
             });
 
             btnSendComment.addEventListener("click", async () => {
@@ -539,19 +558,12 @@ async function carregarTweets() {
                     alert(erro.message || "Erro ao comentar");
                     return;
                 }
-
                 commentInput.value = "";
-
-
-                await carregarComentarios(tweetId);
                 commentCount.textContent = Number(commentCount.textContent) + 1;
-                if (Number(commentCount.textContent) > 0) {
-                    btnComment.classList.add("commented");
-                }
+                await carregarComentarios(tweetId);
+                btnComment.classList.add("commented");
             });
         });
-
-        addEventLike();
 
         if (dado.tweets.length === 0) {
             feedList.innerHTML = `
@@ -561,6 +573,8 @@ async function carregarTweets() {
             `;
             return;
         }
+
+        addEventLike();
 
     } catch (error) {
         console.error(error);
@@ -573,8 +587,12 @@ function addEventLike() {
 
     document.querySelectorAll(".like-btn").forEach((botao) => {
         botao.addEventListener("click", async () => {
+
             const tweetId = botao.dataset.id;
-            const tweetCurtido = botao.dataset.liked === "true";
+            const liked = botao.dataset.liked; //retorna string "true"/"false"
+            // "liked" é igual "true" --- retorna bool para tweetCurtido
+            const tweetCurtido = liked === "true"
+            const count = botao.parentElement.querySelector(".action-count");
 
             const resposta = await fetch(`http://localhost:3000/api/likes/${tweetId}`, {
                 // se tweetCurtido for true → DELETE, se não → POST
@@ -585,12 +603,30 @@ function addEventLike() {
                 }
             });
 
+            // check status
             if (resposta.status === 401) {
                 logout();
                 return;
             }
 
-            carregarTweets();
+            if (!resposta.ok) {
+                const erro = await resposta.json();
+                alert(erro.message || "Erro ao curtir");
+                return;
+            }
+
+            if (tweetCurtido) {
+                botao.classList.remove("liked");
+                botao.dataset.liked = "false";
+
+                count.textContent = Number(count.textContent) - 1;
+
+            } else {
+                botao.classList.add("liked");
+                botao.dataset.liked = "true";
+
+                count.textContent = Number(count.textContent) + 1;
+            }
         });
     });
 }
@@ -658,15 +694,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- verifica se o campo search ta em foco ---
-    const busca = document.getElementById('searchField');
-    if (busca) {
-        busca.addEventListener('blur', () => {
-            busca.value = ''; // Limpa ao clicar fora
-        });
-    }
-
-    // fecha o coemntario, form se clicar fora. 
+    // fecha o coemntario/form se clicar fora. 
     document.addEventListener("click", (event) => {
         const clicouEmComentario = event.target.closest(".comments-container");
         const clicouNoForm = event.target.closest(".comment-form");
@@ -684,4 +712,13 @@ document.addEventListener('DOMContentLoaded', () => {
             form.style.display = "none";
         });
     });
+
+    // --- verifica se o campo search ta em foco ---
+    const busca = document.getElementById('searchField');
+    if (busca) {
+        busca.addEventListener('blur', () => {
+            busca.value = ''; // Limpa ao clicar fora
+        });
+    }
+
 });

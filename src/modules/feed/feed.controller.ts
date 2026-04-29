@@ -14,7 +14,8 @@ export class FeedController {
     }
 
     public async listarExplore(req: Request, res: Response) {
-        const userIdExplore = req.headers.userid as string;
+        const userIdExplore = (req as any).usuario.id;
+        
         const resultExplore = await feedService.explore(userIdExplore);
         return res.json(resultExplore);
     }
