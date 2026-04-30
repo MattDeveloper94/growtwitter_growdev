@@ -53,11 +53,18 @@ async function carregarTweets() {
                         <div class="reply-original">
                             <b>${tweets.replyTo.usuario.nome} @${tweets.replyTo.usuario.username}</b>
                             <p>${tweets.replyTo.conteudo}</p>
+
+                            ${tweets.replyTo.fotoTweet ? `
+                                <img 
+                                    class="tweet-image reply-image"
+                                    src="http://localhost:3000${tweets.replyTo.fotoTweet}"
+                                >
+                            ` : ""}
                         </div>
 
                         <div class="post-header">
                             <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
-                            <span>
+                            <span class="tweet-date">
                                 • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
                             </span>
 
@@ -76,7 +83,7 @@ async function carregarTweets() {
                     ` : `
                         <div class="post-header">
                             <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
-                            <span>
+                            <span class="tweet-date">
                                 • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
                             </span>
 
@@ -95,6 +102,13 @@ async function carregarTweets() {
                     `}
 
                     <div class="post-text">${tweets.conteudo}</div>
+
+                    ${tweets.fotoTweet ? `
+                        <img 
+                            class="tweet-image"
+                            src="http://localhost:3000${tweets.fotoTweet}"
+                        >
+                    ` : ""}
 
                     <div class="post-footer">   
 
@@ -156,7 +170,9 @@ async function carregarTweets() {
                         ${isOwner ? `
 
                             <div class="action-item">
-                                <button class="icon-button btn-editar" title="editar" data-id="${tweets.id}" data-conteudo="${tweets.conteudo}">
+                                <button class="icon-button btn-editar" title="editar" 
+                                    data-id="${tweets.id}" data-conteudo="${tweets.conteudo}"
+                                >
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                         <path d="M12 20h9"/>
                                         <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"
@@ -233,7 +249,12 @@ async function carregarTweets() {
                             alert(resultado.message || "Erro ao editar tweet");
                             return;
                         }
+
                         article.querySelector(".post-text").textContent = novoConteudo;
+
+                        const spanData = article.querySelector(".tweet-date");
+                        spanData.classList.add("edited");
+                        spanData.textContent = `• Editado em ${dataUpdate}`;
 
                     } catch (error) {
                         console.error(error);
@@ -399,6 +420,12 @@ async function carregarTweets() {
 
                 const count = article.querySelector(".reply-count");
                 count.textContent = Number(count.textContent) + 1;
+
+                await carregarTweets();
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
             });
 
             const btnComment = article.querySelector(".comment-btn");
@@ -654,15 +681,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const tweet = document.getElementById("tweetContent").value;
 
             try {
+                const inputFotoTweet = document.getElementById("inputFotoTweet");
+                const previewFotoTweet = document.getElementById("previewFotoTweet");
+
+                const formData = new FormData();
+
+                formData.append("conteudo", tweet);
+
+                if (inputFotoTweet.files[0]) {
+                    formData.append("fotoTweet", inputFotoTweet.files[0]);
+                }
+
                 const resposta = await fetch("http://localhost:3000/api/tweets", {
                     method: "POST",
                     headers: {
-                        "Content-type": "application/json",
                         Authorization: `Bearer ${token}`
                     },
-                    body: JSON.stringify({
-                        conteudo: tweet
-                    })
+                    body: formData
                 });
 
                 if (resposta.status === 401) {
@@ -678,6 +713,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 campoTweet.value = "";
+                inputFotoTweet.value = "";
+                previewFotoTweet.innerHTML = "";
+
                 campoTweet.style.height = "auto";
 
                 if (contador) {

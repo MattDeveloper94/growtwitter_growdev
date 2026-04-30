@@ -7,12 +7,14 @@ export class PostService {
     async createTweet(dados: CreateTweetDto) {
 
         dados.conteudo = dados.conteudo
-            .trim()
-            .split("\n")
-            .map(linha => linha.trim())
-            .join("\n");
+            ? dados.conteudo
+                .trim()
+                .split("\n")
+                .map(linha => linha.trim())
+                .join("\n")
+            : "";
 
-        if (!dados.conteudo)
+        if (!dados.conteudo?.trim() && !dados.fotoTweet)
             throw new Error(`O Tweet não pode estar vazio.`)
 
         if (dados.conteudo.length > 280)
@@ -32,19 +34,20 @@ export class PostService {
         if (!tweet)
             throw new Error('Tweet não encontrado.')
 
-
         if (tweet.userId != userId)
             throw new Error('Você não tem permissão para atualizar esse tweet.');
 
         if (dados.conteudo !== undefined) {
 
             dados.conteudo = dados.conteudo
-                .trim()
-                .split("\n")
-                .map(linha => linha.trim())
-                .join("\n");
+                ? dados.conteudo
+                    .trim()
+                    .split("\n")
+                    .map(linha => linha.trim())
+                    .join("\n")
+                : "";
 
-            if (!dados.conteudo)
+            if (!dados.conteudo && !dados.fotoTweet)
                 throw new Error("O tweet não pode estar vazio.")
 
             if (dados.conteudo.length > 280)

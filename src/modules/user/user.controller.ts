@@ -13,6 +13,14 @@ export class UserController {
 
         return res.json(result);
     }
+
+    public async me(req: Request, res: Response) {
+        const id = (req as any).usuario.id;
+
+        const result = await userService.obterUsuarioLogado(id);
+
+        return res.json(result);
+    }
 }
 
 export class UserFotoPerfilController {

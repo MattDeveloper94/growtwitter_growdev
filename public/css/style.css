@@ -47,6 +47,161 @@ body {
     }
 }
 
+/* perfil usuario*/
+
+.user-account {
+    position: relative;
+    margin-top: auto;
+    margin-bottom: 0;
+    height: 72px;
+    overflow: visible;
+    cursor: pointer;
+}
+
+.account-front {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    background-color: #cbd1de6a;
+    border-radius: 24px;
+    padding: 14px;
+}
+
+.account-front:hover {
+    background-color: var(--twitter-blue);
+}
+
+.profile-dropdown {
+    /* display: none; */
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 200px;
+
+    background: #050505;
+    border: 1px solid var(--twitter-blue);
+    border-radius: 24px;
+
+    padding: 16px 14px 85px;
+
+    flex-direction: column;
+    gap: 15px;
+    display: flex;
+
+    opacity: 0;
+    transform: translateY(6px);
+
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.3s ease;
+
+    z-index: 1;
+}
+
+.profile-dropdown.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#btnUploadFoto:hover,
+#btnLogout:hover {
+    background-color: var(--twitter-blue);
+}
+
+.profile-dropdown button {
+    width: 100%;
+    height: 48px;
+
+    background: transparent;
+    border: 1px solid var(--twitter-blue);
+    border-radius: 24px;
+
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-foto {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: 0.2s;
+
+    z-index: 9999;
+}
+
+.modal-foto.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    width: 320px;
+
+    background: #16181c;
+    border: 1px solid #2f3336;
+    border-radius: 24px;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    animation: modalShow 0.2s ease;
+}
+
+.modal-content h3 {
+    color: white;
+    text-align: center;
+}
+
+.modal-content button {
+    height: 45px;
+
+    border: none;
+    border-radius: 999px;
+
+    background: #1d9bf0;
+    color: white;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#btnFecharModal {
+    background: #2f3336;
+}
+
+@keyframes modalShow {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
 .comments-container {
     margin-top: 12px;
     padding-left: 14px;
@@ -114,31 +269,99 @@ body {
     background-color: var(--cor-hover);
 }
 
-/* USER - ACCOUNT */
-.user-account {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    margin-top: auto;
-    /* Empurra para o final da sidebar se usar flex-direction: column */
-    margin-bottom: 20px;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: 0.2s;
+/* -----  PAGE tema account ---light mode----  */
+
+body:not(.dark-mode) .profile-dropdown {
+    background: #ffffff;
+    border: 1px solid var(--twitter-blue);
+    z-index: 1;
 }
 
-.user-account:hover {
-    background-color: var(--cor-hover);
+body:not(.dark-mode) .profile-dropdown button {
+    background: transparent;
+    color: #0f1419;
+    border: 1px solid var(--twitter-blue);
+    z-index: 1;
 }
 
-/* -----  PAGE EXPLORE -------  */
+body:not(.dark-mode) .account-front {
+    background: #e9e6e6;
+    z-index: 10;
+}
+
+body:not(.dark-mode) .account-front:hover {
+    background: var(--twitter-blue);
+    z-index: 10;
+}
+
+
+body:not(.dark-mode) .account-front button {
+    background: #d5d6d6;
+    color: #0f1419;
+    z-index: 10;
+}
+
+/* -----  PAGE tema account ---dark mode----  */
+
+body.dark-mode .profile-dropdown {
+    background: #0f1115;
+    border: 1px solid var(--twitter-blue);
+    z-index: 1;
+}
+
+body.dark-mode .profile-dropdown button {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid var(--twitter-blue);
+    z-index: 1;
+}
+
+body.dark-mode .account-front {
+    background: #2a2f38;
+    z-index: 10;
+}
+
+body.dark-mode .account-front:hover {
+    background: var(--twitter-blue);
+    z-index: 10;
+}
+
+body.dark-mode .user-username-logado {
+    background: transparent;
+    color: rgb(173, 173, 173);
+    z-index: 10;
+}
+
 
 /* Organização dos textos (Nome e @) */
 .user-info {
     flex: 1;
     display: flex;
     flex-direction: column;
+}
+
+.dark-mode .user-name-logado {
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.dark-mode .user-username-logado {
+    font-size: 14px;
+    color: #86b4ff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.user-name-logado {
+    font-size: 18px;
+    color: #000000;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.user-username-logado {
+    font-size: 14px;
+    color: rgb(46, 52, 112);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .user-name {
@@ -175,6 +398,35 @@ body {
 }
 
 /* Área do Tweet */
+#btnFotoTweet {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    color: #1d9bf0;
+}
+
+#btnFotoTweet:hover {
+    opacity: 0.8;
+}
+
+.tweet-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-top: 10px;
+}
+
+.preview-tweet-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-top: 10px;
+}
+
 .tweet-box {
     padding: 15px;
     display: flex;
@@ -210,7 +462,7 @@ body {
     background: #1d9bf0;
     color: white;
     font-weight: bold;
-    font-size: 20px;   
+    font-size: 20px;
 
 }
 
@@ -528,6 +780,19 @@ header h2 {
 }
 
 /* white mode */
+
+body.light-mode .user-account {
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+}
+
+body.light-mode .user-name-logado {
+    color: #000;
+}
+
+body.light-mode .user-username-logado {
+    color: #555;
+}
 
 body:not(.dark-mode) .comment-item p {
     color: #222;

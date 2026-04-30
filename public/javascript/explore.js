@@ -43,57 +43,73 @@ async function carregarTweets() {
 
             article.innerHTML = `
                 <div class="avatar">
-                ${tweets.usuario.fotoPerfil
+                    ${tweets.usuario.fotoPerfil
                     ? `<img class="avatar-img" src="http://localhost:3000${tweets.usuario.fotoPerfil}">`
                     : tweets.usuario.nome.charAt(0).toUpperCase()
                 }
                 </div>
                 <div class="post-content">
-                ${tweets.replyTo ? `
-                    <div class="reply-original">
-                        <b>${tweets.replyTo.usuario.nome} @${tweets.replyTo.usuario.username}</b>
-                        <p>${tweets.replyTo.conteudo}</p>
-                    </div>
+                    ${tweets.replyTo ? `
+                        <div class="reply-original">
+                            <b>${tweets.replyTo.usuario.nome} @${tweets.replyTo.usuario.username}</b>
+                            <p>${tweets.replyTo.conteudo}</p>
 
-                    <div class="post-header">
-                        <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
-                        <span>
-                            • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
-                        </span>
+                            ${tweets.replyTo.fotoTweet ? `
+                                <img 
+                                    class="tweet-image reply-image"
+                                    src="http://localhost:3000${tweets.replyTo.fotoTweet}"
+                                >
+                            ` : ""}
+                        </div>
 
-                        ${!isOwner && !tweets.estouSeguindo ?
+                        <div class="post-header">
+                            <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
+                            <span class="tweet-date">
+                                • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
+                            </span>
+
+                            ${!isOwner && !tweets.estouSeguindo ?
                         `<span class="btn-follow" data-id="${tweets.userId}"> 
-                                Seguir 
-                             </span>
-                         ` : ""}  
+                                    Seguir 
+                                </span>
+                            ` : ""}  
 
-                        ${!isOwner && tweets.estouSeguindo ?
+                            ${!isOwner && tweets.estouSeguindo ?
                         `<span class="btn-following" data-id="${tweets.userId}">
-                                Seguindo
+                                    Seguindo
+                                </span>
+                            ` : ""}
+                        </div>
+                    ` : `
+                        <div class="post-header">
+                            <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
+                            <span class="tweet-date">
+                                • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
                             </span>
-                        ` : ""}
-                    </div>
-                ` : `
-                    <div class="post-header">
-                        <b>${tweets.usuario.nome} @${tweets.usuario.username}</b> 
-                        <span>
-                            • ${foiEditado ? `Editado em ${dataUpdate}` : dataCriacao}
-                        </span>
 
-                        ${!isOwner && !tweets.estouSeguindo ?
+                            ${!isOwner && !tweets.estouSeguindo ?
                     `<span class="btn-follow" data-id="${tweets.userId}"> 
-                                Seguir 
-                            </span>
-                        ` : ""}  
+                                    Seguir 
+                                </span>
+                            ` : ""}  
 
-                        ${!isOwner && tweets.estouSeguindo ?
+                            ${!isOwner && tweets.estouSeguindo ?
                     `<span class="btn-following" data-id="${tweets.userId}">
-                                Seguindo
-                            </span>
-                        ` : ""}
-                    </div>
-                `}
+                                    Seguindo
+                                </span>
+                            ` : ""}
+                        </div>
+                    `}
+
                     <div class="post-text">${tweets.conteudo}</div>
+
+                    ${tweets.fotoTweet ? `
+                        <img 
+                            class="tweet-image"
+                            src="http://localhost:3000${tweets.fotoTweet}"
+                        >
+                    ` : ""}
+
                     <div class="post-footer">   
 
                         <div class="action-item">
@@ -154,7 +170,9 @@ async function carregarTweets() {
                         ${isOwner ? `
 
                             <div class="action-item">
-                                <button class="icon-button btn-editar" title="editar" data-id="${tweets.id}" data-conteudo="${tweets.conteudo}">
+                                <button class="icon-button btn-editar" title="editar" 
+                                    data-id="${tweets.id}" data-conteudo="${tweets.conteudo}"
+                                >
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                         <path d="M12 20h9"/>
                                         <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"
@@ -183,11 +201,13 @@ async function carregarTweets() {
 
                         ` : ""} 
                     </div>
+
                     <div class="comments-container" style="display: none;"></div>
                     <div class="comment-form" style="display: none;">
                         <textarea class="comment-input" placeholder="Escreva um comentário..."></textarea>
                         <button class="btn-send-comment">Comentar</button>
                     </div>
+
                 </div>
             `;
 
@@ -229,7 +249,12 @@ async function carregarTweets() {
                             alert(resultado.message || "Erro ao editar tweet");
                             return;
                         }
+
                         article.querySelector(".post-text").textContent = novoConteudo;
+
+                        const spanData = article.querySelector(".tweet-date");
+                        spanData.classList.add("edited");
+                        spanData.textContent = `• Editado em ${dataUpdate}`;
 
                     } catch (error) {
                         console.error(error);
@@ -395,6 +420,12 @@ async function carregarTweets() {
 
                 const count = article.querySelector(".reply-count");
                 count.textContent = Number(count.textContent) + 1;
+
+                await carregarTweets();
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
             });
 
             const btnComment = article.querySelector(".comment-btn");
@@ -650,15 +681,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const tweet = document.getElementById("tweetContent").value;
 
             try {
+                const inputFotoTweet = document.getElementById("inputFotoTweet");
+                const previewFotoTweet = document.getElementById("previewFotoTweet");
+
+                const formData = new FormData();
+
+                formData.append("conteudo", tweet);
+
+                if (inputFotoTweet.files[0]) {
+                    formData.append("fotoTweet", inputFotoTweet.files[0]);
+                }
+
                 const resposta = await fetch("http://localhost:3000/api/tweets", {
                     method: "POST",
                     headers: {
-                        "Content-type": "application/json",
                         Authorization: `Bearer ${token}`
                     },
-                    body: JSON.stringify({
-                        conteudo: tweet
-                    })
+                    body: formData
                 });
 
                 if (resposta.status === 401) {
@@ -674,6 +713,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 campoTweet.value = "";
+                inputFotoTweet.value = "";
+                previewFotoTweet.innerHTML = "";
+
                 campoTweet.style.height = "auto";
 
                 if (contador) {

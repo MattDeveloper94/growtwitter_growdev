@@ -27,6 +27,26 @@ export class UserService {
             }
         }
 
+        dados.nome = dados.nome.replace(/[^a-zA-ZÀ-ÿ0-9\s]/g, "")
+            .trim()
+            .toLowerCase()
+            .split(" ")
+            .filter(Boolean)
+            .map((palavra) => palavra.charAt(0).toUpperCase() + palavra.slice(1))
+            .join(" ");
+
+        dados.username = dados.username.replace(/[^a-zA-ZÀ-ÿ0-9\s]/g, "")
+            .trim()
+            .toLowerCase()
+            .split(" ")
+            .filter(Boolean)
+            .map((palavra) => palavra.charAt(0).toUpperCase() + palavra.slice(1))
+            .join(" ");
+
+        dados.email = dados.email
+            .trim()
+            .toLowerCase()
+
         const inicial = dados.nome.charAt(0).toUpperCase();
 
         if (!dados.fotoPerfil) {
@@ -46,6 +66,15 @@ export class UserService {
             ok: true,
             usuario: usuarioSemSenha
         }
+    }
+
+    async obterUsuarioLogado(id: string) {
+        const usuario = await userRepository.obterPorId(id);
+
+        return {
+            ok: true,
+            usuario
+        };
     }
 }
 

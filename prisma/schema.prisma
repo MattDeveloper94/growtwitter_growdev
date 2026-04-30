@@ -25,7 +25,7 @@ model Usuario {
   //QuemEuSigo
   following Follow[] @relation("QuemEuSigo")
 
-  likes Like[] @relation("UsuariosId")
+  likes    Like[]    @relation("UsuariosId")
   comments Comment[]
 
   @@map("usuario")
@@ -37,18 +37,19 @@ model Tweet {
   conteudo  String   @db.VarChar(280)
   dtCriacao DateTime @default(now()) @map("dt_criacao")
   dtUpdate  DateTime @updatedAt @map("dt_update")
+  fotoTweet String? @map("foto_tweet")
 
-  // vai guarda o id do tweet pai referenciado
+  //guarda o id do tweet pai referenciado
   replyId String? @map("reply_id") @db.Uuid
-  // um tweet se relacionando com o "Tweet-Pai"
+  // replyTo é um novo tweet que aponta para o "Tweet-Pai"
   replyTo Tweet?  @relation("TweetReplies", fields: [replyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // apontando a relacao
+  // apontando a relacao | replies representa uma lista de tweets "filhos"
   replies Tweet[] @relation("TweetReplies")
 
   userId  String  @map("user_id") @db.Uuid
   usuario Usuario @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  likes Like[] @relation("TweetsLiked")
+  likes    Like[]    @relation("TweetsLiked")
   comments Comment[]
 
   @@map("tweet")
@@ -62,8 +63,8 @@ model Like {
   dtCriacao DateTime @default(now()) @map("dt_criacao")
   dtUpdate  DateTime @updatedAt @map("dt_update")
 
-  usuario     Usuario @relation("UsuariosId", fields: [usuarioId], references: [id], onDelete: Cascade, onUpdate: Cascade) // quem curtiu
-  tweet Tweet   @relation("TweetsLiked", fields: [tweetId], references: [id], onDelete: Cascade, onUpdate: Cascade) // tweet curtido
+  usuario Usuario @relation("UsuariosId", fields: [usuarioId], references: [id], onDelete: Cascade, onUpdate: Cascade) // quem curtiu
+  tweet   Tweet   @relation("TweetsLiked", fields: [tweetId], references: [id], onDelete: Cascade, onUpdate: Cascade) // tweet curtido
 
   @@id([usuarioId, tweetId])
   @@map("like")
@@ -86,11 +87,11 @@ model Follow {
 }
 
 model Comment {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  conteudo  String   @db.VarChar(280)
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  conteudo String @db.VarChar(280)
 
-  userId  String  @map("user_id") @db.Uuid
-  tweetId String  @map("tweet_id") @db.Uuid
+  userId  String @map("user_id") @db.Uuid
+  tweetId String @map("tweet_id") @db.Uuid
 
   usuario Usuario @relation(fields: [userId], references: [id], onDelete: Cascade)
   tweet   Tweet   @relation(fields: [tweetId], references: [id], onDelete: Cascade)

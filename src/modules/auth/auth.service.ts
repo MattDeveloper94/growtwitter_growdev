@@ -6,12 +6,13 @@ const userRepository = new UserRepository();
 //validacao email
 const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+//validando login
 export class AuthService {
   public async login(dados: LoginUsuarioDto) {
 
     let usuario;
 
-    //verificando email ou username se existe
+    //validando campo login
     if (!dados.email && !dados.username)
       throw new Error('Informe seu E-mail ou Username!')
 
@@ -26,8 +27,16 @@ export class AuthService {
 
     //recebendo e-mail ou username
     if (dados.email) {
+      dados.email = dados.email.trim().toLowerCase();
+
       usuario = await userRepository.obterPorEmail(dados.email)
+
     } else if (dados.username) {
+      dados.username = dados.username
+        .trim()
+        .toLowerCase()
+        .replace(/\b\w/g, letra => letra.toUpperCase());
+
       usuario = await userRepository.obterPorUsername(dados.username)
     }
 

@@ -38,7 +38,8 @@ export class UserRepository {
                 nome: true,
                 username: true,
                 email: true,
-                senha: true
+                senha: true,
+                fotoPerfil: true
             }
         });
         console.log('✅ Usuário encontrado:', usuario);
@@ -56,7 +57,8 @@ export class UserRepository {
                 nome: true,
                 username: true,
                 email: true,
-                senha: true
+                senha: true,
+                fotoPerfil: true
             }
         });
         console.log('✅ Usuário encontrado:', usuario);
@@ -74,7 +76,8 @@ export class UserRepository {
                 nome: true,
                 username: true,
                 email: true,
-                senha: true
+                senha: true,
+                fotoPerfil: true
             }
         });
         return usuario

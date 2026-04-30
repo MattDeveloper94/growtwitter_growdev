@@ -14,7 +14,7 @@ export class FollowRepository {
         });
     }
 
-    // criar follow
+    // follow
     public async criar(followerId: string, followingId: string) {
         return await prisma.follow.create({
             data: {
@@ -24,7 +24,7 @@ export class FollowRepository {
         });
     }
 
-    // deletar follow
+    // unfollow
     public async deletar(followerId: string, followingId: string) {
         return await prisma.follow.delete({
             where: {

@@ -6,7 +6,7 @@ const feedService = new FeedService();
 export class FeedController {
 
     public async listar(req: Request, res: Response) {
-        //pega o usuario.id que logado que veio da requisicao
+        //pega o id de quem está logado, e que veio da requisicao
         const userId = (req as any).usuario.id;
 
         const result = await feedService.timeLine(userId);

@@ -30,4 +30,15 @@ router.put("/users/foto", authMiddleware, upload.single("fotoPerfil"), async (re
     }
 });
 
+router.get("/users/me", authMiddleware, async (req, res) => {
+    try {
+        await userController.me(req, res);
+    } catch (error: any) {
+        return res.status(400).send({
+            ok: false,
+            message: error.message
+        });
+    }
+});
+
 export default router;

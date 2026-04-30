@@ -1,11 +1,10 @@
 import { FollowRepository } from "../follow/follow.repository";
 import { prisma } from "../../database/prisma";
-import { PostRepository } from "../post/post.repository";
 
 const followRepository = new FollowRepository();
-const postRepository = new PostRepository();
 
 export class FeedService {
+    //home
     public async timeLine(userIdLogado: string) {
 
         // quem eu sigo

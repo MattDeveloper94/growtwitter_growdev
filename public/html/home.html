@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrowTwitter - Dev Edition</title>
+    <title>GrowTwitter - Home</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" href="../img/imagem_logo.svg">
     <script src="../javascript/main.js"></script>
@@ -27,29 +27,58 @@
                 <div class="nav-item" data-page="profile">👤 Profile</div>
             </div>
             <button id="btn-menu" class="btn-sair" data-page="logout">Sair</button>
-
             <div class="user-account">
-                <div class="avatar avatar-logado"></div>
-                <div class="user-info">
-                    <p class="user-name">Nome do Aluno</p>
-                    <p class="user-handle">@dev_aluno</p>
+
+                <div class="profile-dropdown">
+                    <button id="btnUploadFoto">Img Perfil</button>
+                    <button id="btnLogout">Logout</button>
                 </div>
-                <div class="user-more">...</div>
+
+                <div class="account-front">
+                    <div class="avatar avatar-usuario-logado"></div>
+
+                    <div class="user-info">
+                        <p class="user-name-logado"></p>
+                        <span class="user-username-logado"></span>
+                    </div>
+                </div>
+
             </div>
         </aside>
+
+        <div class="modal-foto" id="modalFoto">
+            <div class="modal-content">
+                <h3>Alterar foto de perfil</h3>
+                <button id="btnEscolherFoto">
+                    Escolher imagem
+                </button>
+                <button id="btnFecharModal">
+                    Fechar
+                </button>
+            </div>
+        </div>
+        <input type="file" id="inputFoto" hidden accept="image/*">
 
         <main class="feed">
             <header class="timeline-header">
                 <h2>Home</h2>
             </header>
             <div id="tema-index">
-                <button id="toggle-theme" class="btn-tema">botao-tema-mode</button>
+                <button id="toggle-theme" class="btn-tema"> </button>
             </div>
+            <input type="file" id="inputFotoTweet" hidden accept="image/*">
             <div class="tweet-box">
-                <div class="avatar avatar-tweet-box"></div>
+                <div class="avatar avatar-usuario-logado"></div>
                 <div class="input-container">
                     <textarea id="tweetContent" rows="1" placeholder="O que tá rolando?"></textarea>
+                    <div id="previewFotoTweet"></div>
                     <div class="tweet-actions">
+                        <button id="btnFotoTweet" title="upload image" type="button">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                                <path
+                                    d="M3 5.5A2.5 2.5 0 0 1 5.5 3h2.379a1.5 1.5 0 0 1 1.06.44l.621.62a1.5 1.5 0 0 0 1.06.44h3.758a1.5 1.5 0 0 0 1.06-.44l.621-.62A1.5 1.5 0 0 1 17.12 3H19.5A2.5 2.5 0 0 1 22 5.5v11A2.5 2.5 0 0 1 19.5 19h-14A2.5 2.5 0 0 1 3 16.5v-11ZM12 8a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Zm0 1.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z" />
+                            </svg>
+                        </button>
                         <div>
                             <p id="contador">0/280</p>
                         </div>

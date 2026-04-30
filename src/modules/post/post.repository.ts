@@ -9,9 +9,11 @@ export class PostRepository {
             data: {
                 conteudo: dados.conteudo,
                 userId: dados.userId,
-                replyId: dados.replyId
+                replyId: dados.replyId,
+                fotoTweet: dados.fotoTweet
             }
         });
+
         console.log('✅ Tweet criado:', tweet);
         return tweet;
     }
@@ -19,9 +21,9 @@ export class PostRepository {
     // atualizar tweet
     public async updateTweet(id: string, dados: UpdateTweetDto) {
         const tweet = await prisma.tweet.update({
-            where: { 
-                id 
-            }, 
+            where: {
+                id
+            },
             data: dados
         });
         console.log('✅ Tweet atualizado:', tweet);
@@ -31,8 +33,8 @@ export class PostRepository {
     // deletar tweet
     public async deletarTweetPorId(id: string) {
         const tweet = await prisma.tweet.delete({
-            where: { 
-                id 
+            where: {
+                id
             }
         });
         console.log('✅ Tweet deletado:', tweet);
@@ -48,7 +50,8 @@ export class PostRepository {
                 userId: true,
                 conteudo: true,
                 dtCriacao: true,
-                dtUpdate: true
+                dtUpdate: true,
+                fotoTweet: true
             }
         });
         console.log('✅ Tweet encontrado:', tweet);
@@ -62,7 +65,8 @@ export class PostRepository {
                 usuario: {
                     select: {
                         nome: true,
-                        username: true
+                        username: true,
+                        fotoPerfil: true
                     }
                 }
             },

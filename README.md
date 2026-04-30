@@ -36,14 +36,14 @@ A aplicação utiliza JWT (JSON Web Token) para autenticação e proteção de r
 
 - O backend identifica o usuário através do token
 - Validação de permissão para:
--     editar tweets [associado e autenticado] ✅ concluído
--     deletar tweets [associado e autenticado] ✅ concluído
--     seguir/deixar de seguir usuários [associado e autenticado] ✅ concluído
--     reply tweets [associado e autenticado] ✅ concluído
--     comentar tweets [associado e autenticado] ✅ concluído
--     editar comentários [associado e autenticado] ✅ concluído
--     deletar comentários [associado e autenticado] ✅ concluído
--     curtidas de usuários [associado e autenticado] ✅ concluído
+-     editar tweets ✅ concluído
+-     deletar tweets ✅ concluído
+-     seguir/deixar de seguir usuários ✅ concluído
+-     reply tweets ✅ concluído
+-     comentar tweets ✅ concluído
+-     editar comentários ✅ concluído
+-     deletar comentários ✅ concluído
+-     curtidas de usuários ✅ concluído
 
 ---
 
@@ -52,21 +52,21 @@ A aplicação utiliza JWT (JSON Web Token) para autenticação e proteção de r
 -     Cadastro de usuário ✅ concluído
 -     Login e autenticação ✅ concluído
 -     Logout ✅ concluído
--     Criar posts [associado e autenticado] ✅ concluído
--     Atualizar posts [associado e autenticado] ✅ concluído
--     Deletar posts [associado e autenticado] ✅ concluído
+-     Criar posts ✅ concluído
+-     Atualizar posts ✅ concluído
+-     Deletar posts ✅ concluído
 -     Reply posts ✅ concluído
 -     Comentar posts ✅ concluído
 -     Curtir posts ✅ concluído
--     Upload de imagens no post (em desenvolvimento)
--     Upload de imagens foto do perfil (em desenvolvimento)
+-     Upload de imagens no post ✅ concluído
+-     Upload de imagens foto do perfil ✅ concluído
 -     Visualizar feed (timeline, com Tweets de quem você segue) ✅ concluído
 -     Visualizar Explore (todos Tweets) ✅ concluído
--     Funcionalidade de seguir e deixar de seguir usuários [associado e autenticado] ✅ concluído
--     Sistema de perfil de usuário (em desenvolvimento)
+-     Funcionalidade de seguir e deixar de seguir usuários ✅ concluído
+-     Sistema de perfil de usuário ✅ concluído
+-     Autenticação com JWT ✅ concluído
 -     Sistema de Teste
 -     Docker
--     Autenticação com JWT ✅ concluído
 
 ---
 
@@ -84,6 +84,7 @@ A aplicação utiliza JWT (JSON Web Token) para autenticação e proteção de r
         POST /api/auths → login
     👤 Usuário
         POST /api/users → cadastro
+        GET /api/users/me → buscar por mim
     📝 Tweets
         POST /api/tweets → criar tweet
         PUT /api/tweets/:id → editar tweet
