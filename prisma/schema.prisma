@@ -37,7 +37,7 @@ model Tweet {
   conteudo  String   @db.VarChar(280)
   dtCriacao DateTime @default(now()) @map("dt_criacao")
   dtUpdate  DateTime @updatedAt @map("dt_update")
-  fotoTweet String? @map("foto_tweet")
+  fotoTweet String?  @map("foto_tweet")
 
   //guarda o id do tweet pai referenciado
   replyId String? @map("reply_id") @db.Uuid
